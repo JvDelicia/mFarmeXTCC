@@ -16,6 +16,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 
 
 import com.example.a3aetim.Myndie.Classes.ImageDAO;
+import com.example.a3aetim.Myndie.Connection.AppConfig;
 import com.example.a3aetim.Myndie.helper.DatabaseHelper;
 
 import java.io.ByteArrayOutputStream;
@@ -40,8 +44,9 @@ import es.dmoral.toasty.Toasty;
 
 import static android.media.MediaRecorder.VideoSource.CAMERA;
 import static android.widget.Toast.LENGTH_SHORT;
+import android.webkit.JavascriptInterface;
 
-public class CadastroCli extends Activity implements AdapterView.OnItemSelectedListener {
+public class CadastroCli extends Activity{ //implements AdapterView.OnItemSelectedListener {
 
     DatabaseHelper helper;
     EditText txtName, txtEmail,txtUser, txtPass, txtBirth;
@@ -58,7 +63,26 @@ public class CadastroCli extends Activity implements AdapterView.OnItemSelectedL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_cli);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        WebView wv = (WebView)findViewById(R.id.webv);
+        WebSettings ws = wv.getSettings();
+        ws.setSupportZoom(false);
+        ws.setJavaScriptEnabled(true);
+
+        wv.addJavascriptInterface(this, "Voltar");
+
+        wv.loadUrl(AppConfig.URL_CadastraUsuarios);
+
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                finalizar();
+                return false;
+            }
+        });
+
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         btnChoosePic = (Button)findViewById(R.id.btnChoosePic);
 
         df = new SimpleDateFormat("dd/MM/yyyy");
@@ -97,12 +121,16 @@ public class CadastroCli extends Activity implements AdapterView.OnItemSelectedL
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, linguagens );
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        lang.setAdapter(dataAdapter2);
+        lang.setAdapter(dataAdapter2);*/
 
 
     }
 
-    private void showPictureDialog(){
+    public void finalizar(){
+        this.finish();
+    }
+
+   /* private void showPictureDialog(){
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
         pictureDialog.setTitle("Selecione");
         String[] pictureDialogItems = {
@@ -407,8 +435,11 @@ public class CadastroCli extends Activity implements AdapterView.OnItemSelectedL
     public boolean isPicUserValid(){
         //Lógica para validar foto
         return true;
-    }
+    }*/
+    @JavascriptInterface
+    public void voltar(){
 
+    }
 
 
 

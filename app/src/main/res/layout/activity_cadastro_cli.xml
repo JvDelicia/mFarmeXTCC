@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<WebView
+    android:id="@+id/webv"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/colorBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+</WebView>
+<!--
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -131,12 +140,12 @@
 
 
 
-        <!--<DatePicker
+        &lt;!&ndash;<DatePicker
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </DatePicker>-->
-        <!--https://developer.android.com/guide/topics/ui/controls/pickers#java-->
+        </DatePicker>&ndash;&gt;
+        &lt;!&ndash;https://developer.android.com/guide/topics/ui/controls/pickers#java&ndash;&gt;
 
 
         <Button
@@ -148,4 +157,4 @@
 
 
     </LinearLayout>
-</ScrollView>
+</ScrollView>-->

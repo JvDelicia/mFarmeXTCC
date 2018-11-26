@@ -12,4 +12,10 @@ public class AppConfig {
 
     // Lista todos os genêros
     public static String URL_ListaGeneros = "https://myndie.azurewebsites.net/php/ListaGenero.php";
+
+    public static String URL_CadastraUsuarios = "https://myndie.azurewebsites.net/User/Register";
+
+    public static String URL_RecuperarSenha = "URL RECUPERAR SENHA";
+
+
 }
