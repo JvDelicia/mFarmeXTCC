@@ -21,7 +21,8 @@
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/myndieicon"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
             android:transitionName="AppTransition" />
 
         <TextView

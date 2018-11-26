@@ -56,11 +56,10 @@ public class MarketFragment extends Fragment {
     private ArrayList<Application> app;
     private ArrayList<Genre> genre;
     private ArrayList<String> fundoNew,fundoPromo,fundoAvaliation;
-    private RecyclerView mRecyclerViewNew,mRecyclerViewPromo,mRecyclerViewAvaliation;
+    private RecyclerView mRecyclerViewNew,mRecyclerViewPromo,mRecyclerViewAvaliation,genreRecyclerView;
     private ApplicationAdapter mRVAdapter;
     private BackAppAdapter mBackAdapterNew,mBackAdapterPromo,mBackAdapterAvaliation;
     private RecyclerView.LayoutManager mRVLManagerNew,mRVLManagerPromo,mRVLManagerAvaliation,mRVLManagerFundoNew,mRVLManagerFundoPromo,mRVLManagerFundoAvaliation;
-    RecyclerView genreRecyclerView;
 
     public MarketFragment(ArrayList arrayList){
         app = arrayList;
@@ -91,7 +90,7 @@ public class MarketFragment extends Fragment {
         setmRecyclerViewNew();
         setmRecyclerViewPromo();
         setmRecyclerViewAvaliation();
-        setGenreMarket();
+        getAllGenres();
         return view;
     }
     @Override
@@ -172,7 +171,6 @@ public class MarketFragment extends Fragment {
         });
     }
     private void setGenreMarket(){
-        loadGenre();
         GenreAdapter mGenredapter = new GenreAdapter(genre);
         //Define quadro que fica atrás dos apps
 
@@ -190,26 +188,46 @@ public class MarketFragment extends Fragment {
         });
     }
 
-    private void loadGenre(){
-        Cursor cursorgen = db.rawQuery("SELECT _IdGenre, NameGen from Genre", null);
-        int idgen;
-        String namegen;
-        cursorgen.moveToFirst();
-        for (int j = 0; j < cursorgen.getCount(); j++) {
-            idgen = cursorgen.getInt(0);
-            namegen = cursorgen.getString(1);
-            genre.add(new Genre(idgen,namegen));
-            cursorgen.moveToNext();
-        }
-        cursorgen.close();
-    }
-
-
-
-
     @Override
     public void onDestroy(){
         helper.close();
         super.onDestroy();
+    }
+    private void getAllGenres() {
+        final ArrayList arrayList = new ArrayList();
+        // Tag used to cancel the request
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                AppConfig.URL_ListaGeneros, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray listaAplicativosResponse = new JSONArray(response);
+
+                    for (int i = 0; i < listaAplicativosResponse.length(); i++) {
+                        JSONObject jsonObjectApp = listaAplicativosResponse.getJSONObject(i);
+                        int id = Integer.parseInt(jsonObjectApp.getString("Id"));
+                        String name = jsonObjectApp.getString("Name");
+                        Genre objetoGenre = new Genre(id,name);
+                        arrayList.add(objetoGenre);
+                    }
+                    genre.addAll(arrayList);
+                    setGenreMarket();
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq);
     }
 }

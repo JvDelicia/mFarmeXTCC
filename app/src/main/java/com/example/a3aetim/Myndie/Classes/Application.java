@@ -15,11 +15,15 @@ public class Application extends Item implements Serializable{
     private String Version;
     private String PublisherName;
     private String ReleaseDate;
+    private String ImageUrl;
+    private int DeveloperId;
+    private int TypeAppId;
+    private int PegiId;
 
     public Application() {
     }
 
-    public Application(int id, String title, double preco, String ver, String desc, String publisher, String releasedate){
+    public Application(int id, String title, double preco, String ver, String desc, String publisher, String releasedate, String imageUrl, int developerId, int typeAppId, int pegiId){
         _IdApp = id;
         Title = title;
         Price = preco;
@@ -27,6 +31,10 @@ public class Application extends Item implements Serializable{
         Version = ver;
         PublisherName = publisher;
         ReleaseDate = releasedate;
+        ImageUrl = imageUrl;
+        DeveloperId = developerId;
+        TypeAppId = typeAppId;
+        PegiId = pegiId;
     }
 
     public Application(Application app){
@@ -37,6 +45,10 @@ public class Application extends Item implements Serializable{
         Version = app.Version;
         PublisherName = app.PublisherName;
         ReleaseDate = app.ReleaseDate;
+        ImageUrl = app.ImageUrl;
+        DeveloperId = app.DeveloperId;
+        TypeAppId = app.TypeAppId;
+        PegiId = app.PegiId;
     }
 
     public int get_IdApp() {
@@ -60,6 +72,23 @@ public class Application extends Item implements Serializable{
     }
 
     public String getReleaseDate(){return ReleaseDate;}
+
+    public String getImageUrl() {
+
+        return ImageUrl;
+    }
+
+    public int getDeveloperId() {
+        return DeveloperId;
+    }
+
+    public int getTypeAppId() {
+        return TypeAppId;
+    }
+
+    public int getPegiId() {
+        return PegiId;
+    }
 
     public String getPublisherName(){return PublisherName; }
 
@@ -94,5 +123,21 @@ public class Application extends Item implements Serializable{
 
     public void setReleaseDate(String releaseDate) {
         ReleaseDate = releaseDate;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
+    }
+
+    public void setDeveloperId(int developerId) {
+        DeveloperId = developerId;
+    }
+
+    public void setTypeAppId(int typeAppId) {
+        TypeAppId = typeAppId;
+    }
+
+    public void setPegiId(int pegiId) {
+        PegiId = pegiId;
     }
 }

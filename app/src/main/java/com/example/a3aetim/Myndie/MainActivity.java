@@ -47,11 +47,16 @@ import com.example.a3aetim.Myndie.Classes.User;
 import com.example.a3aetim.Myndie.Connection.AppConfig;
 import com.example.a3aetim.Myndie.Connection.AppController;
 import com.example.a3aetim.Myndie.Fragments.*;
+import com.example.a3aetim.Myndie.Images.DownloadImage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -64,7 +69,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     User loggedUser;
     NavigationView navigationView;
-    Bitmap img;
     ArrayList<Application> app;
     public static final String TAG = AppController.class.getName();
     @Override
@@ -77,12 +81,14 @@ public class MainActivity extends AppCompatActivity
             app = new ArrayList<>();
             getAllApps();
         }
+        setLoggedData();
+        setLoggedUser();
+    }
 
+    private void setLoggedData() {
         loggedUser = (User) getIntent().getSerializableExtra("LoggedUser");
-        //img = BitmapFactory.decodeByteArray(loggedUser.getPicUser(),0,loggedUser.getPicUser().length);
-        img = ImageDAO.loadImageFromStorage(loggedUser.getPicUser());
-        RoundedBitmapDrawable imgRound = RoundedBitmapDrawableFactory.create(getResources(),img);
-        imgRound.setCornerRadius(100);
+        //RoundedBitmapDrawable imgRound = RoundedBitmapDrawableFactory.create(getResources(),img);
+        //imgRound.setCornerRadius(100);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -95,7 +101,8 @@ public class MainActivity extends AppCompatActivity
         ImageView navImgView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgvNavHeader);
         TextView txtNomeUsu = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtvNameUserNav);
         TextView txtEmailUsu = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtEmailUserNav);
-        navImgView.setImageDrawable(imgRound);
+        //navImgView.setImageDrawable(imgRound);
+        new DownloadImage(navImgView).execute(loggedUser.getPicUser());
         txtEmailUsu.setText(loggedUser.getEmailUser());
         txtNomeUsu.setText(loggedUser.getNameUser());
         navigationView.setNavigationItemSelectedListener(this);
@@ -107,8 +114,6 @@ public class MainActivity extends AppCompatActivity
                 openProf();
             }
         });
-
-        setLoggedUser();
     }
 
     private void openMarket() {
@@ -130,11 +135,16 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void setLoggedUser(){
-        SharedPreferences sp = getSharedPreferences(PREF_NAME,0);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("EmailLoggedUser",loggedUser.getEmailUser());
-        editor.commit();
+    private void setLoggedUser() {
+        String FILENAME = "logged_user";
+        File file =getFileStreamPath(FILENAME);
+        try{
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(loggedUser);
+            oos.close();
+            fos.close();
+        }catch (Exception e){}
     }
 
     @Override
@@ -167,9 +177,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if(id==R.id.filter_apps){
-            getAllApps();
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -221,10 +228,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void logOut(View view){
-        SharedPreferences sp = getSharedPreferences(PREF_NAME,0);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("EmailLoggedUser","");
-        editor.commit();
+        String FILENAME = "logged_user";
+        File file =getFileStreamPath(FILENAME);
+        file.delete();
         finish();
     }
 
@@ -286,8 +292,13 @@ public class MainActivity extends AppCompatActivity
                         String version = jsonObjectApp.getString("Version");
                         double price = Double.parseDouble(jsonObjectApp.getString("Price"));
                         String publisher = jsonObjectApp.getString("PublisherName");
-                        String releasedate = jsonObjectApp.getString("releasedate");
-                        Application objetoApp = new Application(idapp, title, price, version, desc, publisher, releasedate);
+                        String releasedate = jsonObjectApp.getString("ReleaseDate");
+                        String imageURL = jsonObjectApp.getString("ImageUrl");
+                        imageURL = "https://myndie.azurewebsites.net/"+imageURL;
+                        int devId = jsonObjectApp.getInt("DeveloperId");
+                        int typeAppId = jsonObjectApp.getInt("TypeAppId");
+                        int pegiId = jsonObjectApp.getInt("PegiId");
+                        Application objetoApp = new Application(idapp, title, price, version, desc, publisher, releasedate,imageURL,devId,typeAppId,pegiId);
                         arrayList.add(objetoApp);
                     }
                     app.addAll(arrayList);
@@ -297,11 +308,8 @@ public class MainActivity extends AppCompatActivity
                     e.printStackTrace();
 
                 }
-
             }
         }, new Response.ErrorListener() {
-
-
 
             @Override
             public void onErrorResponse(VolleyError error) {

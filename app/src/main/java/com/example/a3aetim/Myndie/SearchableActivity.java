@@ -81,7 +81,7 @@ public class SearchableActivity extends AppCompatActivity {
             });
         }
 
-        private void getApps(String queryNome){
+        /*private void getApps(String queryNome){
             Cursor cursorapp = db.rawQuery("SELECT _IdApp, NameApp, PriceApp,VersionApp, PublisherNameApp, ReleaseDateApp, DescApp from Application WHERE NameApp LIKE '%"+ queryNome+"%'", null);
             int idapp;
             String nameapp,version, publisher, desc;
@@ -100,23 +100,23 @@ public class SearchableActivity extends AppCompatActivity {
                 cursorapp.moveToNext();
             }
             cursorapp.close();
-        }
+        }*/
         public void searchHandler(Intent intent){
             if(Intent.ACTION_SEARCH.toLowerCase().equalsIgnoreCase(intent.getAction().toLowerCase())){
                 if(intent.getSerializableExtra("Genre") != null){
                     Genre g = (Genre) intent.getSerializableExtra("Genre");
                     toolbar.setTitle(g.getName());
-                    getAppsByGenre(g.get_IdGenre());
+                    //getAppsByGenre(g.get_IdGenre());
                 }
                 else{
                     String query = intent.getStringExtra(SearchManager.QUERY);
                     toolbar.setTitle(query);
-                    getApps(query);
+                    //getApps(query);
                 }
         }
     }
 
-    private void getAppsByGenre(int idGenre) {
+    /*private void getAppsByGenre(int idGenre) {
         Cursor cursorapp = db.rawQuery("SELECT _IdApp, NameApp, PriceApp,VersionApp, PublisherNameApp, ReleaseDateApp, DescApp from Application INNER JOIN ApplicationGenre on Application._IdApp = ApplicationGenre._IdApp_FK WHERE Application._IdApp = ApplicationGenre._IdApp_FK AND _IdGen_FK ="+idGenre, null);
         int idapp;
         String nameapp,version, publisher, desc;
@@ -135,7 +135,7 @@ public class SearchableActivity extends AppCompatActivity {
             cursorapp.moveToNext();
         }
         cursorapp.close();
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

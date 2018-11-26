@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 
 import android.app.Activity;
@@ -21,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,15 +35,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.a3aetim.Myndie.Classes.User;
+import com.example.a3aetim.Myndie.Connection.AppConfig;
+import com.example.a3aetim.Myndie.Connection.AppController;
 import com.example.a3aetim.Myndie.helper.DatabaseHelper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static com.example.a3aetim.Myndie.Connection.AppController.TAG;
 
 /**
  * A login screen that offers login via email/password.
@@ -104,30 +118,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     }
 /*User(_IdUser INTEGER PRIMARY KEY AUTOINCREMENT, LoginUser TEXT UNIQUE, PassUser TEXT, NameUser TEXT, " +
                    "BirthUser DATE, EmailUser TEXT, PicUser BLOB, CountryUser INTEGER, TypeUser TINYINT, CrtDateUser DATE, IdLang INTEGER, IdDev INTEGER REFERENCES Developer(_IdDev));");*/
-    public void trocar(){
-        DatabaseHelper helper = new DatabaseHelper(this);
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String query = "SELECT * FROM User WHERE EmailUser =" + " '"+chkEmail+"'" + "AND" +" '"+ chkPass+"'";
-        Cursor cursor = db.rawQuery(query,null);
-        cursor.moveToFirst();
-        User usuario = new User();
-        for(int i = 0; i < cursor.getCount(); i++){
-            int id = cursor.getInt(0);
-            String username = cursor.getString(1);
-            String password = cursor.getString(2);
-            String name = cursor.getString(3);
-            String birth = cursor.getString(4);
-            String email = cursor.getString(5);
-            String pic = cursor.getString(6);
-            int country = cursor.getInt(7);
-            int type = cursor.getInt(8);
-            String crt = cursor.getString(9);
-            int idlang = cursor.getInt(10);
-            int iddev = cursor.getInt(11);
-            usuario = new User(id,birth,country,crt,email,iddev,idlang,username,name,password,pic,type);
-        }
+    public void logar(User usu){
         Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("LoggedUser",usuario);
+        i.putExtra("LoggedUser",usu);
         startActivity(i);
         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         finish();
@@ -232,16 +225,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        DatabaseHelper helper = new DatabaseHelper(this);
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String query = "SELECT * FROM User WHERE EmailUser = "+" '"+email+"'";
-        Cursor cursor = db.rawQuery(query,null);
-        if(cursor.getCount()==1){
-            chkEmail = email;
-            helper.close();
-            return true;
-        }
-        else{helper.close();return false;}
+       if(email.contains("@") && email.contains(".")){
+           return true;
+       }
+       else {return false;}
     }
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
@@ -392,7 +379,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-                trocar();
+                //trocar();
+                checkLogin(mEmail,mPassword);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -431,6 +419,71 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         Toasty.info(this,"Em desenvolvimento", Toast.LENGTH_SHORT,true).show();
         //Intent i = new Intent(this,CadastroCli.class);
         //startActivity(i);
+    }
+
+    private void checkLogin(final String email, final String password) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_login";
+
+        Toasty.custom(LoginActivity.this,"Logging in....",R.drawable.ic_warning_outline_white, Color.WHITE,Toast.LENGTH_SHORT,true,false).show();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_LOGIN, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Login Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+
+                    // Check for error node in json
+                    if (!error) {
+                        // Now store the user in SQLite
+                        String uid = jObj.getString("Id");
+
+                        JSONObject user = jObj.getJSONObject("User");
+                        User usuario = new User(user);
+                        logar(usuario);
+
+                    } else {
+                        // Error in login. Get the error message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Login Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+                params.put("password", password);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 }
 

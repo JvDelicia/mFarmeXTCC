@@ -12,9 +12,15 @@ import android.os.Bundle;
 import com.example.a3aetim.Myndie.Classes.User;
 import com.example.a3aetim.Myndie.helper.DatabaseHelper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 public class Splash extends AppCompatActivity {
     public static String PREF_NAME = "Preferencias";
-    SharedPreferences sp;
+    User loggedUser;
     Intent intent,i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,40 +33,29 @@ public class Splash extends AppCompatActivity {
         final Context co = this;
         carregar();
     }
-    private boolean checkLoggedUser(){
-        sp = getSharedPreferences(PREF_NAME,0);
-        if(sp.getString("EmailLoggedUser","").length()==0){
-            return false;
-        }
-        else {return true;}
-    }
-    private User getUser(){
-        sp = getSharedPreferences(PREF_NAME,0);
-        String emailUser = sp.getString("EmailLoggedUser","");
-        DatabaseHelper helper = new DatabaseHelper(this);
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String query = "SELECT * FROM User WHERE EmailUser =" + " '"+emailUser+"'";
-        Cursor cursor = db.rawQuery(query,null);
-        cursor.moveToFirst();
-        User usuario = new User();
-        for(int i = 0; i < cursor.getCount(); i++){
-            int id = cursor.getInt(0);
-            String username = cursor.getString(1);
-            String password = cursor.getString(2);
-            String name = cursor.getString(3);
-            String birth = cursor.getString(4);
-            String email = emailUser;
-            String pic = cursor.getString(6);
-            int country = cursor.getInt(7);
-            int type = cursor.getInt(8);
-            String crt = cursor.getString(9);
-            int idlang = cursor.getInt(10);
-            int iddev = cursor.getInt(11);
 
-            usuario = new User(id,birth,country,crt,email,iddev,idlang,username,name,password,pic,type);
+    private boolean checkLoggedUser(){
+        loggedUser = new User();
+        String FILENAME = "logged_user";
+        File file =getFileStreamPath(FILENAME);
+        try{
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            loggedUser = (User) ois.readObject();
+            fis.close();
+            ois.close();
         }
-        return usuario;
+        catch (FileNotFoundException fnfe){
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -80,8 +75,7 @@ public class Splash extends AppCompatActivity {
                     boolean chk = checkLoggedUser();
                     User user;
                     if(chk){
-                        user = getUser();
-                        i.putExtra("LoggedUser",user);
+                        i.putExtra("LoggedUser",loggedUser);
                         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(i);
                     }

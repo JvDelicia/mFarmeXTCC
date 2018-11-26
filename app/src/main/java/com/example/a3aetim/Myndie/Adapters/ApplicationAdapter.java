@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a3aetim.Myndie.Classes.Application;
+import com.example.a3aetim.Myndie.Images.DownloadImage;
 import com.example.a3aetim.Myndie.R;
 
 import java.util.ArrayList;
@@ -65,10 +66,11 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ApplicationViewHolder applicationViewHolder, int i) {
+
         Application currentApp = mAppList.get(i);
-        //applicationViewHolder.mImageView.setImageBitmap();
+        new DownloadImage(applicationViewHolder.mImageView).execute(currentApp.getImageUrl());
         applicationViewHolder.mTitle.setText(currentApp.getTitle());
-        applicationViewHolder.mDesc.setText("R$ "+ String.valueOf(currentApp.getPrice()));
+        applicationViewHolder.mDesc.setText("US$ "+ String.valueOf(currentApp.getPrice()));
     }
 
     @Override
@@ -107,3 +109,4 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         }
     };
 }
+//https://medium.com/@crossphd/android-image-loading-from-a-string-url-6c8290b82c5e
