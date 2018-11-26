@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name">Myndie</string>
+    <string name="title_activity_main">Myndie</string>
+
+    <string name="activity_title_item_search">Pesquisar</string>
+    <string name="activity_title_item_listApps">Aplicações</string>
+    <string name="activity_title_item_listDevs">Desenvolvedores</string>
+    <string name="activity_title_item_store">Loja</string>
+    <string name="activity_title_item_avaliations">Avaliações</string>
+    <string name="activity_title_item_discussions">Discussões</string>
+    <string name="activity_title_item_configurations">Configurações</string>
+    <string name="activity_title_item_rateus">Avalie-nos</string>
+
+    <string name="activity_hint_etname">Nome</string>
+    <string name="activity_hint_etsenha">Senha (Mínimo 5 caracteres)</string>
+    <string name="activity_hint_etdata">Data de nascimento (dd/mm/yyyy)</string>
+    <string name="activity_hint_etemail">E-mail</string>
+    <string name="activity_hint_etusername">Nome de usuário</string>
+    <string name="activity_hint_etcountry">Escolha seu país:</string>
+    <string name="activity_hint_etlanguage">Linguagem</string>
+    <string name="activity_hint_etimage">Imagem</string>
+    <string name="activity_button_choosepic">Escolher foto</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Login</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Senha</string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in_short">Login</string>
+
+    <string name="error_invalid_name">O nome digitado é inválido</string>
+    <string name="error_invalid_email">O endereço de e-mail digitado é inválido</string>
+    <string name="error_invalid_date">A data informada é inválida</string>
+    <string name="error_invalid_password">A senha informada é muito curta</string>
+    <string name="error_invalid_user">O nome de usuário já está sendo utilizado. Utilize outro nome de usuário</string>
+
+    <string name="error_incorrect_password">A senha está incorreta</string>
+    <string name="error_field_required">O campo é obrigatório</string>
+
+    <string name="title_activity_cadastro_cli">Cadastro</string>
+    <string name="title_activity_settings">Configurações</string>
+    <string name="title_filter">Filter</string>
+    <!-- Strings related to Settings -->
+
+    <string-array name="list_languages_preferences">
+        <item>Inglês</item>
+        <item>Espanhol</item>
+        <item>Português</item>
+    </string-array>
+    <string-array name="list_languages_values">
+        <item>en</item>
+        <item>es</item>
+        <item>pt</item>
+    </string-array>
+
+
+    <string name="pref_title_notification">Notificações</string>
+    <string name="pref_title_vibrate">Vibrar</string>
+    <string name="pref_title_sound">Som</string>
+    <string name="pref_activated">Ativada(o)</string>
+    <string name="pref_deactivated">Desativada(o)</string>
+    <string name="pref_title_language">Idioma</string>
+    <string name="pref_choose_language">Escolha um idioma</string>
+
+    <string name="toast_work_in_progress">Estamos trabalhando para adicionar essa língua</string>
+    <string name="prof_details">Details:</string>
+    <string name="market_base_new">New</string>
+    <string name="market_base_promo">Promotion</string>
+    <string name="market_base_avaliated">Most Avaliated</string>
+
+    <string name="app_Desc">Descrição</string>
+</resources>

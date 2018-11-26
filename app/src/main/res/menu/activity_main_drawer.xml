@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_Market"
+            android:title="@string/activity_title_item_store"
+            android:checked="true"
+            android:icon="@drawable/ic_store_black_24dp"/>
+        <item
+            android:id="@+id/nav_Avaliation"
+            android:title="@string/activity_title_item_avaliations"
+            android:icon="@drawable/ic_star_black_24dp"/>
+        <!--<item
+            android:id="@+id/nav_Discussions"
+            android:title="@string/activity_title_item_discussions"/>-->
+        <item
+            android:id="@+id/nav_Confing"
+            android:title="@string/activity_title_item_configurations"
+            android:icon="@drawable/ic_settings_black_24dp"/>
+
+
+    </group>
+    <group>
+        <item
+            android:id="@+id/nav_RateUs"
+            android:title="@string/activity_title_item_rateus"
+            android:icon="@drawable/ic_play_arrow_black_24dp"/>
+    </group>
+
+</menu>

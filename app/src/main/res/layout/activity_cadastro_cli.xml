@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CadastroCli">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing">
+
+        <TextView
+            android:id="@+id/lblTexto"
+            android:layout_width="319dp"
+            android:layout_height="wrap_content"
+            android:textSize="40px"
+            android:text="Preencha os campos abaixo para criar uma nova conta:" />
+
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium_cad"
+            android:backgroundTint="@color/colorText"
+            android:ems="10"
+            android:hint="@string/activity_hint_etname"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium_cad"
+            android:backgroundTint="@color/colorText"
+            android:ems="10"
+            android:hint="@string/activity_hint_etemail"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText" />
+
+        <EditText
+            android:id="@+id/edtUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium_cad"
+            android:backgroundTint="@color/colorText"
+            android:ems="10"
+            android:hint="@string/activity_hint_etusername"
+            android:singleLine="true"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText" />
+
+        <EditText
+            android:id="@+id/edtPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium_cad"
+            android:backgroundTint="@color/colorText"
+            android:ems="10"
+            android:hint="@string/activity_hint_etsenha"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText" />
+
+        <EditText
+            android:id="@+id/edtBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium_cad"
+            android:backgroundTint="@color/colorText"
+            android:ems="10"
+            android:hint="@string/activity_hint_etdata"
+            android:inputType="date"
+            android:singleLine="true"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_hint_etcountry"
+            android:layout_marginTop="@dimen/spacing_medium_cad" />
+
+        <Spinner
+            android:id="@+id/spnCountry"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/txtvLang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_hint_etlanguage"
+            android:layout_marginTop="@dimen/spacing_medium_cad" />
+
+        <Spinner
+            android:id="@+id/spnLang"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/btnChoosePic"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/activity_button_choosepic"
+            android:layout_marginTop="50dp" />
+
+        <ImageView
+            android:id="@+id/imgvArchive"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp" />
+
+        <Button
+            android:id="@+id/btnCad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="Cad"
+            android:text="Cadastrar" />
+
+
+
+        <!--<DatePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </DatePicker>-->
+        <!--https://developer.android.com/guide/topics/ui/controls/pickers#java-->
+
+
+        <Button
+            android:id="@+id/btnCadProd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="CadProd"
+            android:text="Inserir produtos" />
+
+
+    </LinearLayout>
+</ScrollView>

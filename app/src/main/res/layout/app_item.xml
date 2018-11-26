@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    app:cardBackgroundColor="#00ffffff"
+    app:cardElevation="0dp"
+    android:layout_margin="2dp">
+    <!-- app:cardCornerRadius="15dp"-->
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="140dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgvAppItemMarket"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/myndieicon"
+            android:transitionName="AppTransition" />
+
+        <TextView
+            android:id="@+id/txtTitleAppMarket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imgvAppItemMarket"
+            android:fontFamily="@font/roboto"
+            android:text="dddd" />
+
+        <TextView
+            android:id="@+id/txtAppDescMarket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/roboto_mono_thin"
+            android:text="dddd"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</android.support.design.card.MaterialCardView>
