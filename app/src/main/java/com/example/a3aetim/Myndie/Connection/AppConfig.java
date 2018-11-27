@@ -15,6 +15,10 @@ public class AppConfig {
 
     public static String URL_CadastraUsuarios = "https://myndie.azurewebsites.net/User/Register";
 
+    public static String URL_ConsultaGeneros = "https://myndie.azurewebsites.net/php/ConsultaGenero.php ";
+
+    public static String URL_ConsultaAppGeneros = "https://myndie.azurewebsites.net/php/ConsultaAppGenero.php ";
+
     public static String URL_RecuperarSenha = "URL RECUPERAR SENHA";
 
 

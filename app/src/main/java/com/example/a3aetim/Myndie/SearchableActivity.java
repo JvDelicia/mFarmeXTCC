@@ -14,19 +14,35 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.a3aetim.Myndie.Adapters.ApplicationAdapter;
 import com.example.a3aetim.Myndie.Classes.Application;
 import com.example.a3aetim.Myndie.Classes.Genre;
+import com.example.a3aetim.Myndie.Classes.User;
+import com.example.a3aetim.Myndie.Connection.AppConfig;
+import com.example.a3aetim.Myndie.Connection.AppController;
 import com.example.a3aetim.Myndie.helper.DatabaseHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.a3aetim.Myndie.Connection.AppController.TAG;
 
 public class SearchableActivity extends AppCompatActivity {
     private DatabaseHelper helper;
@@ -101,6 +117,7 @@ public class SearchableActivity extends AppCompatActivity {
             }
             cursorapp.close();
         }*/
+
         public void searchHandler(Intent intent){
             if(Intent.ACTION_SEARCH.toLowerCase().equalsIgnoreCase(intent.getAction().toLowerCase())){
                 if(intent.getSerializableExtra("Genre") != null){
@@ -116,8 +133,68 @@ public class SearchableActivity extends AppCompatActivity {
         }
     }
 
-    /*private void getAppsByGenre(int idGenre) {
-        Cursor cursorapp = db.rawQuery("SELECT _IdApp, NameApp, PriceApp,VersionApp, PublisherNameApp, ReleaseDateApp, DescApp from Application INNER JOIN ApplicationGenre on Application._IdApp = ApplicationGenre._IdApp_FK WHERE Application._IdApp = ApplicationGenre._IdApp_FK AND _IdGen_FK ="+idGenre, null);
+   /* private void getAppsByGenre(int idGenre) {
+
+        String tag_string_req = "req_login";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_ConsultaAppGeneros, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Login Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+
+                    // Check for error node in json
+                    if (!error) {
+                        // Now store the user in SQLite
+                        String uid = jObj.getString("Id");
+
+                        JSONObject user = jObj.getJSONObject("User");
+                        User usuario = new User(user);
+                        logar(usuario);
+
+                    } else {
+                        // Error in login. Get the error message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Login Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("idapp", email);
+                params.put("password", password);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        *//*Cursor cursorapp = db.rawQuery("SELECT _IdApp, NameApp, PriceApp,VersionApp, PublisherNameApp, ReleaseDateApp, DescApp from Application INNER JOIN ApplicationGenre on Application._IdApp = ApplicationGenre._IdApp_FK WHERE Application._IdApp = ApplicationGenre._IdApp_FK AND _IdGen_FK ="+idGenre, null);
         int idapp;
         String nameapp,version, publisher, desc;
         double preco;
@@ -134,14 +211,15 @@ public class SearchableActivity extends AppCompatActivity {
             app.add(new Application(idapp,nameapp,preco,version,desc,publisher,releasedate));
             cursorapp.moveToNext();
         }
-        cursorapp.close();
-    }*/
-
+        cursorapp.close();*//*
+    }
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.searchablemenu,menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -151,6 +229,7 @@ public class SearchableActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onDestroy(){
         helper.close();

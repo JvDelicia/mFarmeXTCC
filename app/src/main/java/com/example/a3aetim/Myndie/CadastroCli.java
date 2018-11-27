@@ -77,6 +77,7 @@ public class CadastroCli extends Activity{ //implements AdapterView.OnItemSelect
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                Toast.makeText(CadastroCli.this, "Cadastro realizado com sucesso!!", Toast.LENGTH_SHORT).show();
                 finalizar();
                 return false;
             }

@@ -18,6 +18,12 @@
         <item name="colorControlHighlight">@color/colorGray</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:navigationBarColor">@color/colorTransparent</item>
+        <item name="android:dialogTheme">@style/DialogStyle</item>
+        <item name="android:alertDialogTheme">@style/DialogStyle</item>
+    </style>
+
+    <style name="DialogStyle" parent="android:Theme.Material.Dialog">
+        <item name="android:colorAccent">@color/colorTitle</item>
     </style>
 
     <style name="CustomActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">

@@ -19,8 +19,9 @@
     <color name="colorText">#ffffff</color>
     <color name="colorbackapp">#1a1e23</color>
     <color name="colorBackgroundSpotlight">#a4a4a4</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorAccent">#D92B4C</color>
     <color name="colorGray">#9e9e9e</color>
     <color name="colorControlActivated">#d63a57</color>
+    <color name="colorTitle">#D92B4C</color>
     <color name="colorTransparent">#7e7e7e</color>
 </resources>
