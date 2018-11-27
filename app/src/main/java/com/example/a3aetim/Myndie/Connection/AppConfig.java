@@ -21,5 +21,7 @@ public class AppConfig {
 
     public static String URL_RecuperarSenha = "URL RECUPERAR SENHA";
 
+    public static String URL_ConsultaAppNome = "https://myndie.azurewebsites.net/php/ConsultaAppName.php";
 
+    public static String URL_ConsultaImagensApp ="https://myndie.azurewebsites.net/php/ConsultaImagens.php";
 }

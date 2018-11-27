@@ -2,6 +2,8 @@ package com.example.a3aetim.Myndie;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.MenuItemCompat;
@@ -9,19 +11,27 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.a3aetim.Myndie.Classes.Application;
+import com.example.a3aetim.Myndie.Classes.Image;
 import com.example.a3aetim.Myndie.Classes.User;
 import com.example.a3aetim.Myndie.Classes.UserDAO;
+import com.example.a3aetim.Myndie.Connection.AppConfig;
+import com.example.a3aetim.Myndie.Connection.AppController;
 import com.example.a3aetim.Myndie.ViewHolder.CollapsedViewHolder;
 import com.example.a3aetim.Myndie.ViewHolder.ExpandableViewHolder;
 import com.sysdata.widget.accordion.ExpandableItemHolder;
@@ -29,10 +39,17 @@ import com.sysdata.widget.accordion.FancyAccordionView;
 import com.sysdata.widget.accordion.Item;
 import com.sysdata.widget.accordion.ItemAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.a3aetim.Myndie.Connection.AppController.TAG;
 
 public class ApplicationActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     TextView mTitle,mPrice,mVersion, mPublisherName, mReleaseDate;
@@ -53,6 +70,7 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
         mPublisherName = (TextView)findViewById(R.id.txtPublisherNameApp);
         mReleaseDate = (TextView)findViewById(R.id.txtReleaseDateApp);
         mSlider = (SliderLayout)findViewById(R.id.sliderApplication);
+        app  =(Application) getIntent().getSerializableExtra("App");
 
         ItemAdapter.OnItemClickedListener mListener = new ItemAdapter.OnItemClickedListener() {
             @Override
@@ -75,11 +93,11 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
         mDesc.setCollapsedViewHolderFactory(CollapsedViewHolder.Factory.create(R.layout.layout_collapsed), mListener);
         // bind the factory to create view holder for item expanded
         mDesc.setExpandedViewHolderFactory(ExpandableViewHolder.Factory.create(R.layout.layout_expanded), mListener);
+        getImages();
         // restore the expanded item from state
         if (savedInstanceState != null) {
             mDesc.setExpandedItemId(savedInstanceState.getLong(KEY_EXPANDED_ID, Item.INVALID_ID));
         }
-        preencherSlider();
         preencherCampos();
     }
     @Override
@@ -105,7 +123,6 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
     }
 
     public void preencherCampos(){
-        app  =(Application) getIntent().getSerializableExtra("App");
         mTitle.setText(app.getTitle());
         mVersion.setText(app.getVersion());
         mPublisherName.setText(app.getPublisherName());
@@ -125,11 +142,71 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
         itemHolders.add(itemHolder);
         mDesc.setAdapterItems(itemHolders);
     }
+    private void getImages() {
+        final ArrayList arrayList = new ArrayList();
+        // Tag used to cancel the request
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_ConsultaImagensApp, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray listaAplicativosResponse = new JSONArray(response);
 
-    public void preencherSlider(){
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Descrição Imagem 1",R.drawable.ic_error_outline_white_48dp);
-        file_maps.put("Descrição Imagem 2", R.drawable.ic_launcher_foreground);
+                    for (int i = 0; i < listaAplicativosResponse.length(); i++) {
+                        JSONObject jsonObjectApp = listaAplicativosResponse.getJSONObject(i);
+
+                        String imageURL = jsonObjectApp.getString("Url");
+                        imageURL = "https://myndie.azurewebsites.net/"+imageURL;
+                        arrayList.add(imageURL);
+                    }
+                    preencherSlider(arrayList);
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Login Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("idapp", String.valueOf(app.get_IdApp()));
+
+                return params;
+            }
+
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq);
+    }
+    public void preencherSlider(final ArrayList arrayList){
+        ArrayList<Bitmap> fotos = new ArrayList<>();
+        /*for(int i = 0 ; i < arrayList.size(); i++){
+            Bitmap bmp = null;
+            try {
+                InputStream in = new java.net.URL(arrayList.get(i).toString()).openStream();
+                bmp = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            fotos.add(bmp);
+        }
+*/
+        HashMap<String,String> file_maps = new HashMap<String, String>();
+        for(int i = 0 ; i < arrayList.size(); i++){
+            file_maps.put("Imagem "+(i+1), String.valueOf(arrayList.get(i)));
+        }
 
         for(String name : file_maps.keySet()){
             TextSliderView textSliderView = new TextSliderView(this);
@@ -137,9 +214,8 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
             textSliderView
                     //.description(name)
                     .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener(this);
-
             //add your extra information
             /*textSliderView.bundle(new Bundle());
             textSliderView.getBundle()

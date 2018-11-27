@@ -119,6 +119,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 /*User(_IdUser INTEGER PRIMARY KEY AUTOINCREMENT, LoginUser TEXT UNIQUE, PassUser TEXT, NameUser TEXT, " +
                    "BirthUser DATE, EmailUser TEXT, PicUser BLOB, CountryUser INTEGER, TypeUser TINYINT, CrtDateUser DATE, IdLang INTEGER, IdDev INTEGER REFERENCES Developer(_IdDev));");*/
     public void logar(User usu){
+        showProgress(false);
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("LoggedUser",usu);
         startActivity(i);
@@ -217,7 +218,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            //showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
@@ -425,7 +426,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
-        Toasty.custom(LoginActivity.this,"Logging in....",R.drawable.ic_warning_outline_white, Color.WHITE,Toast.LENGTH_SHORT,true,false).show();
+        showProgress(true);
+        Toasty.custom(LoginActivity.this,"Logging in....",R.drawable.ic_warning_outline_white, Color.BLACK,Toast.LENGTH_SHORT,true,true).show();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_LOGIN, new Response.Listener<String>() {
@@ -450,8 +452,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     } else {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
+                        Toasty.error(LoginActivity.this,errorMsg,Toast.LENGTH_SHORT,true).show();
                     }
                 } catch (JSONException e) {
                     // JSON error

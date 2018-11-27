@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <!--<android.support.v7.preference.SwitchPreferenceCompat
     android:defaultValue="true"
     android:title="Settings option"
@@ -32,6 +33,7 @@
        android:positiveButtonText="@null"
        android:key="selec_lang"
        android:summary="%s"
+       android:dialogTheme="@style/CustomDialogPreference"
        android:title="@string/pref_title_language" />
     <!--android:summary="@string/pref_choose_language"-->
 

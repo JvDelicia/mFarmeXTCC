@@ -69,7 +69,11 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
 
         Application currentApp = mAppList.get(i);
         new DownloadImage(applicationViewHolder.mImageView).execute(currentApp.getImageUrl());
-        applicationViewHolder.mTitle.setText(currentApp.getTitle());
+        if(currentApp.getTitle().length()>15){
+            applicationViewHolder.mTitle.setText(currentApp.getTitle().substring(0,15)+"...");
+        }else{
+            applicationViewHolder.mTitle.setText(currentApp.getTitle());
+        }
         applicationViewHolder.mDesc.setText("US$ "+ String.valueOf(currentApp.getPrice()));
     }
 

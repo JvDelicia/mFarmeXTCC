@@ -9,7 +9,7 @@
     <string name="activity_title_item_store">Market</string>
     <string name="activity_title_item_avaliations">Avaliations</string>
     <string name="activity_title_item_discussions">Discussions</string>
-    <string name="activity_title_item_configurations">Configurations</string>
+    <string name="activity_title_item_configurations">Settings</string>
     <string name="activity_title_item_rateus">Rate-us</string>
 
     <string name="activity_hint_etname">Name</string>

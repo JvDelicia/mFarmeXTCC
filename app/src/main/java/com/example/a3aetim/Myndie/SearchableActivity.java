@@ -53,12 +53,13 @@ public class SearchableActivity extends AppCompatActivity {
     private ApplicationAdapter mRVAdapter;
     private RecyclerView.LayoutManager mRVLManager;
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar_Search);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_Search);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("");
@@ -74,63 +75,43 @@ public class SearchableActivity extends AppCompatActivity {
         searchHandler(intent);
     }
 
-    private void load(){
+    private void load() {
         helper = new DatabaseHelper(this);
         db = helper.getReadableDatabase();
         mRVLManager = new LinearLayoutManager(this);
     }
-    private void setmRecyclerView(){
+
+    private void setmRecyclerView() {
         load();
         mRVAdapter = new ApplicationAdapter(app);
         mRecyclerView.setLayoutManager(mRVLManager);
-            mRecyclerView.setAdapter(mRVAdapter);
+        mRecyclerView.setAdapter(mRVAdapter);
 
-            mRVAdapter.setOnitemClickListener(new ApplicationAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view,int position) {
-                    Intent i = new Intent(getApplicationContext(),ApplicationActivity.class);
-                    i.putExtra("App",app.get(position));
-                    ImageView mImgvApp = (ImageView)view.findViewById(R.id.imgvAppItemMarket);
-                    //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, Pair.<View, String>create(mImgvApp,"AppTransition"));
-                    startActivity(i/*,options.toBundle()*/);
-                }
-            });
-        }
-
-        /*private void getApps(String queryNome){
-            Cursor cursorapp = db.rawQuery("SELECT _IdApp, NameApp, PriceApp,VersionApp, PublisherNameApp, ReleaseDateApp, DescApp from Application WHERE NameApp LIKE '%"+ queryNome+"%'", null);
-            int idapp;
-            String nameapp,version, publisher, desc;
-            double preco;
-            String releasedate;
-            cursorapp.moveToFirst();
-            for (int j = 0; j < cursorapp.getCount(); j++) {
-                idapp = cursorapp.getInt(0);
-                nameapp = cursorapp.getString(1);
-                preco = cursorapp.getDouble(2);
-                version = cursorapp.getString(3);
-                publisher = cursorapp.getString(4);
-                releasedate = cursorapp.getString(5);
-                desc = cursorapp.getString(6);
-                app.add(new Application(idapp,nameapp,preco,version,desc,publisher,releasedate));
-                cursorapp.moveToNext();
+        mRVAdapter.setOnitemClickListener(new ApplicationAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent i = new Intent(getApplicationContext(), ApplicationActivity.class);
+                i.putExtra("App", app.get(position));
+                ImageView mImgvApp = (ImageView) view.findViewById(R.id.imgvAppItemMarket);
+                //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, Pair.<View, String>create(mImgvApp,"AppTransition"));
+                startActivity(i/*,options.toBundle()*/);
             }
-            cursorapp.close();
-        }*/
+        });
+    }
 
-        public void searchHandler(Intent intent){
-            if(Intent.ACTION_SEARCH.toLowerCase().equalsIgnoreCase(intent.getAction().toLowerCase())){
-                if(intent.getSerializableExtra("Genre") != null){
-                    Genre g = (Genre) intent.getSerializableExtra("Genre");
-                    toolbar.setTitle(g.getName());
-                    app = new ArrayList<>();
-                    getAppsByGenre(g.get_IdGenre());
-                }
-                else{
-                    String query = intent.getStringExtra(SearchManager.QUERY);
-                    toolbar.setTitle(query);
-                    //getApps(query);
-                }
+    public void searchHandler(Intent intent) {
+        if (Intent.ACTION_SEARCH.toLowerCase().equalsIgnoreCase(intent.getAction().toLowerCase())) {
+            if (intent.getSerializableExtra("Genre") != null) {
+                Genre g = (Genre) intent.getSerializableExtra("Genre");
+                toolbar.setTitle(g.getName());
+                app = new ArrayList<>();
+                getAppsByGenre(g.get_IdGenre());
+            } else {
+                String query = intent.getStringExtra(SearchManager.QUERY);
+                toolbar.setTitle(query);
+                app = new ArrayList<>();
+                getAppsByName(query);
+            }
         }
     }
 
@@ -158,12 +139,11 @@ public class SearchableActivity extends AppCompatActivity {
                         String publisher = jsonObjectApp.getString("PublisherName");
                         String releasedate = jsonObjectApp.getString("ReleaseDate");
                         String imageURL = jsonObjectApp.getString("ImageUrl");
-                        imageURL = "https://myndie.azurewebsites.net/"+imageURL;
+                        imageURL = "https://myndie.azurewebsites.net/" + imageURL;
                         int devId = jsonObjectApp.getInt("DeveloperId");
                         int typeAppId = jsonObjectApp.getInt("TypeAppId");
                         int pegiId = jsonObjectApp.getInt("PegiId");
-                        Application objetoApp = new Application(idapp, title, price, version, desc, publisher, releasedate,imageURL,devId,typeAppId,pegiId);
-                        //Toast.makeText(SearchableActivity.this, objetoApp.getTitle(), Toast.LENGTH_SHORT).show();
+                        Application objetoApp = new Application(idapp, title, price, version, desc, publisher, releasedate, imageURL, devId, typeAppId, pegiId);
                         arrayList.add(objetoApp);
                     }
                     app.addAll(arrayList);
@@ -200,9 +180,77 @@ public class SearchableActivity extends AppCompatActivity {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
+
+    private void getAppsByName(final String appName) {
+
+        String tag_string_req = "req_login";
+        final ArrayList arrayList = new ArrayList();
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_ConsultaAppNome, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Login Response: " + response.toString());
+
+                try {
+                    JSONArray jObj = new JSONArray(response);
+
+                    for (int i = 0; i < jObj.length(); i++) {
+                        JSONObject jsonObjectApp = jObj.getJSONObject(i);
+                        int idapp = Integer.parseInt(jsonObjectApp.getString("Id"));
+                        String title = jsonObjectApp.getString("Name");
+                        String desc = jsonObjectApp.getString("Desc");
+                        String version = jsonObjectApp.getString("Version");
+                        double price = Double.parseDouble(jsonObjectApp.getString("Price"));
+                        String publisher = jsonObjectApp.getString("PublisherName");
+                        String releasedate = jsonObjectApp.getString("ReleaseDate");
+                        String imageURL = jsonObjectApp.getString("ImageUrl");
+                        imageURL = "https://myndie.azurewebsites.net/" + imageURL;
+                        int devId = jsonObjectApp.getInt("DeveloperId");
+                        int typeAppId = jsonObjectApp.getInt("TypeAppId");
+                        int pegiId = jsonObjectApp.getInt("PegiId");
+                        Application objetoApp = new Application(idapp, title, price, version, desc, publisher, releasedate, imageURL, devId, typeAppId, pegiId);
+                        //Toast.makeText(SearchableActivity.this, objetoApp.getTitle(), Toast.LENGTH_SHORT).show();
+                        arrayList.add(objetoApp);
+                    }
+                    app.addAll(arrayList);
+                    setmRecyclerView();
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Login Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Name", appName);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.searchablemenu,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.searchablemenu, menu);
         return true;
     }
 
@@ -217,7 +265,7 @@ public class SearchableActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         helper.close();
         super.onDestroy();
     }
