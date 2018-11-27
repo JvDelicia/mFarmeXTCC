@@ -12,10 +12,10 @@
     <color name="colorTransparent">#232323</color>
 </resources>-->
 <resources>
-<color name="colorPrimary">#D92B4C</color>
-<color name="colorSecondary">#791024</color>
-<color name="colorBackground">#232930</color>
-<color name="colorMarketItem">#941e57</color>
+    <color name="colorPrimary">#D92B4C</color>
+    <color name="colorSecondary">#791024</color>
+    <color name="colorBackground">#232930</color>
+    <color name="colorMarketItem">#941e57</color>
     <color name="colorText">#ffffff</color>
     <color name="colorbackapp">#1a1e23</color>
     <color name="colorBackgroundSpotlight">#a4a4a4</color>
