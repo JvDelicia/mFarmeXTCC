@@ -79,7 +79,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         if(savedInstanceState == null) {
             app = new ArrayList<>();
-            getAllApps();
+            //getAllApps();
+            openMarket();
         }
         setLoggedData();
         setLoggedUser();
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity
     private void openMarket() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.frameContentMain, new MarketFragment(app));
+        ft.add(R.id.frameContentMain, new MarketFragment(/*app*/));
         ft.commit();
     }
 
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_Market) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.frameContentMain, new MarketFragment(app));
+            ft.replace(R.id.frameContentMain, new MarketFragment(/*app*/));
             ft.commit();
         } else if (id == R.id.nav_Avaliation) {
             FragmentManager fm = getSupportFragmentManager();
@@ -257,7 +258,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void getAllApps() {
+ /*   private void getAllApps() {
         final ArrayList arrayList = new ArrayList();
         // Tag used to cancel the request
         StringRequest strReq = new StringRequest(Request.Method.GET,
@@ -276,12 +277,12 @@ public class MainActivity extends AppCompatActivity
                     // user successfully logged in
                     // Create login session
                     // Now store the user in SQLite
-                        /*String uid = jObj.getString("Id");
+                        *//*String uid = jObj.getString("Id");
 
                         JSONObject user = jObj.getJSONObject("User");
                         String username = user.getString("Username");
 
-                        AlertDialog d = new AlertDialog.Builder(MainActivity.this).setMessage(uid + username).show();*/
+                        AlertDialog d = new AlertDialog.Builder(MainActivity.this).setMessage(uid + username).show();*//*
 
                     //Toast.makeText(getApplicationContext(), uid + username, Toast.LENGTH_LONG).show();
                     for (int i = 0; i < listaAplicativosResponse.length(); i++) {
@@ -319,5 +320,5 @@ public class MainActivity extends AppCompatActivity
         };
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq);
-    }
+    }*/
 }

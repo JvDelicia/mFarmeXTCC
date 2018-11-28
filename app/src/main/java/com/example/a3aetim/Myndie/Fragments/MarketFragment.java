@@ -1,9 +1,6 @@
 package com.example.a3aetim.Myndie.Fragments;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,21 +9,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.a3aetim.Myndie.Adapters.ApplicationAdapter;
 import com.example.a3aetim.Myndie.Adapters.BackAppAdapter;
 import com.example.a3aetim.Myndie.Adapters.GenreAdapter;
@@ -43,13 +34,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 
 
-@SuppressLint("ValidFragment")
 public class MarketFragment extends Fragment {
     private DatabaseHelper helper;
     private SQLiteDatabase db;
@@ -60,10 +47,6 @@ public class MarketFragment extends Fragment {
     private ApplicationAdapter mRVAdapter;
     private BackAppAdapter mBackAdapterNew,mBackAdapterPromo,mBackAdapterAvaliation;
     private RecyclerView.LayoutManager mRVLManagerNew,mRVLManagerPromo,mRVLManagerAvaliation,mRVLManagerFundoNew,mRVLManagerFundoPromo,mRVLManagerFundoAvaliation;
-
-    public MarketFragment(ArrayList arrayList){
-        app = arrayList;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,9 +70,8 @@ public class MarketFragment extends Fragment {
         ///
         genreRecyclerView = view.findViewById(R.id.recyclerViewMarketGenre);
         genreRecyclerView.setHasFixedSize(true);
-        setmRecyclerViewNew();
-        setmRecyclerViewPromo();
-        setmRecyclerViewAvaliation();
+        load();
+        getAllApps();
         getAllGenres();
         return view;
     }
@@ -101,6 +83,7 @@ public class MarketFragment extends Fragment {
     private void load(){
         helper = new DatabaseHelper(getActivity());
         db = helper.getReadableDatabase();
+        app = new ArrayList<>();
         genre = new ArrayList<>();
         fundoNew = new ArrayList<String>();
         fundoNew.add(getResources().getString(R.string.market_base_new));
@@ -116,7 +99,6 @@ public class MarketFragment extends Fragment {
         mRVLManagerFundoAvaliation = new LinearLayoutManager(getActivity());
     }
     private void setmRecyclerViewNew(){
-        load();
         mRVAdapter = new ApplicationAdapter(app);
         mBackAdapterNew = new BackAppAdapter(fundoNew,mRVAdapter,mRVLManagerNew);
         //Define quadro que fica atrás dos apps
@@ -213,6 +195,56 @@ public class MarketFragment extends Fragment {
                     }
                     genre.addAll(arrayList);
                     setGenreMarket();
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq);
+    }
+    private void getAllApps() {
+        final ArrayList arrayList = new ArrayList();
+        // Tag used to cancel the request
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                AppConfig.URL_ListaApps, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray listaAplicativosResponse = new JSONArray(response);
+
+                    for (int i = 0; i < listaAplicativosResponse.length(); i++) {
+                        JSONObject jsonObjectApp = listaAplicativosResponse.getJSONObject(i);
+                        int idapp = Integer.parseInt(jsonObjectApp.getString("Id"));
+                        String title = jsonObjectApp.getString("Name");
+                        String desc = jsonObjectApp.getString("Desc");
+                        String version = jsonObjectApp.getString("Version");
+                        double price = Double.parseDouble(jsonObjectApp.getString("Price"));
+                        String publisher = jsonObjectApp.getString("PublisherName");
+                        String releasedate = jsonObjectApp.getString("ReleaseDate");
+                        String imageURL = jsonObjectApp.getString("ImageUrl");
+                        imageURL = "https://myndie.azurewebsites.net/"+imageURL;
+                        int devId = jsonObjectApp.getInt("DeveloperId");
+                        int typeAppId = jsonObjectApp.getInt("TypeAppId");
+                        int pegiId = jsonObjectApp.getInt("PegiId");
+                        Application objetoApp = new Application(idapp, title, price, version, desc, publisher, releasedate,imageURL,devId,typeAppId,pegiId);
+                        arrayList.add(objetoApp);
+                    }
+                    app.addAll(arrayList);
+                    //openMarket();
+                    setmRecyclerViewNew();
+                    setmRecyclerViewPromo();
+                    setmRecyclerViewAvaliation();
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();

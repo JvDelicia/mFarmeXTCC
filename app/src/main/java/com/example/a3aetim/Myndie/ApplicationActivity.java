@@ -127,7 +127,7 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
         mVersion.setText(app.getVersion());
         mPublisherName.setText(app.getPublisherName());
         mReleaseDate.setText(String.valueOf(app.getReleaseDate()));
-        mPrice.setText("R$ "+String.valueOf(app.getPrice()));
+        mPrice.setText("US$ "+String.valueOf(app.getPrice()));
         preencherDesc();
     }
 
@@ -214,7 +214,7 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
             textSliderView
                     //.description(name)
                     .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                    .setScaleType(BaseSliderView.ScaleType.FitCenterCrop)
                     .setOnSliderClickListener(this);
             //add your extra information
             /*textSliderView.bundle(new Bundle());
