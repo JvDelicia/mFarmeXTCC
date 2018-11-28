@@ -64,7 +64,7 @@ public class BackAppAdapter extends RecyclerView.Adapter<BackAppAdapter.Applicat
     @Override
     public void onBindViewHolder(@NonNull ApplicationViewHolder applicationViewHolder, int i) {
         String title = (String) mBack.get(i);
-        applicationViewHolder.mTitle.setText(title);
+        applicationViewHolder.mTitle.setText(title.toUpperCase());
         applicationViewHolder.mRecyclerView.setAdapter(mAppAdapter);
         applicationViewHolder.mRecyclerView.setLayoutManager(mLayoutManager);
     }

@@ -55,7 +55,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     @Override
     public void onBindViewHolder(@NonNull GenreAdapter.GenreViewHolder GenreViewHolder, int i) {
         Genre currentGenre = mGenreList.get(i);
-        GenreViewHolder.mTitle.setText(currentGenre.getName());
+        GenreViewHolder.mTitle.setText(currentGenre.getName().toUpperCase());
     }
 
     @Override
