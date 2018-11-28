@@ -75,6 +75,7 @@
     <string name="market_base_new">Novo</string>
     <string name="market_base_promo">Em Promoção</string>
     <string name="market_base_avaliated">Melhores Avaliados</string>
+    <string name="market_base_partners">Parceiros</string>
 
     <string name="app_Desc">Descricion</string>
 </resources>

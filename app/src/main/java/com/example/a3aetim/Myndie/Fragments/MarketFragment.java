@@ -40,13 +40,13 @@ import java.util.ArrayList;
 public class MarketFragment extends Fragment {
     private DatabaseHelper helper;
     private SQLiteDatabase db;
-    private ArrayList<Application> app;
+    private ArrayList<Application> app,partners;
     private ArrayList<Genre> genre;
-    private ArrayList<String> fundoNew,fundoPromo,fundoAvaliation;
-    private RecyclerView mRecyclerViewNew,mRecyclerViewPromo,mRecyclerViewAvaliation,genreRecyclerView;
-    private ApplicationAdapter mRVAdapter;
-    private BackAppAdapter mBackAdapterNew,mBackAdapterPromo,mBackAdapterAvaliation;
-    private RecyclerView.LayoutManager mRVLManagerNew,mRVLManagerPromo,mRVLManagerAvaliation,mRVLManagerFundoNew,mRVLManagerFundoPromo,mRVLManagerFundoAvaliation;
+    private ArrayList<String> fundoNew,fundoPromo,fundoAvaliation,fundoPartner;
+    private RecyclerView mRecyclerViewNew,mRecyclerViewPromo,mRecyclerViewAvaliation,genreRecyclerView,mRecyclerViewPartner;
+    private ApplicationAdapter mRVAdapter,mAppAdapterPartners;
+    private BackAppAdapter mBackAdapterNew,mBackAdapterPromo,mBackAdapterAvaliation,mBackAdapterPartner;
+    private RecyclerView.LayoutManager mRVLManagerNew,mRVLManagerPromo,mRVLManagerAvaliation,mRVLManagerFundoNew,mRVLManagerFundoPromo,mRVLManagerFundoAvaliation,mRVLManagerPartner,mRVLManagerFundoPartner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,8 +70,12 @@ public class MarketFragment extends Fragment {
         ///
         genreRecyclerView = view.findViewById(R.id.recyclerViewMarketGenre);
         genreRecyclerView.setHasFixedSize(true);
+        ///
+        mRecyclerViewPartner = view.findViewById(R.id.recyclerViewMarketPartner);
+        mRecyclerViewPartner.setHasFixedSize(true);
         load();
         getAllApps();
+        getPartnersApps();
         getAllGenres();
         return view;
     }
@@ -84,6 +88,7 @@ public class MarketFragment extends Fragment {
         helper = new DatabaseHelper(getActivity());
         db = helper.getReadableDatabase();
         app = new ArrayList<>();
+        partners = new ArrayList<>();
         genre = new ArrayList<>();
         fundoNew = new ArrayList<String>();
         fundoNew.add(getResources().getString(R.string.market_base_new));
@@ -91,12 +96,16 @@ public class MarketFragment extends Fragment {
         fundoPromo.add(getResources().getString(R.string.market_base_promo));
         fundoAvaliation = new ArrayList<String>();
         fundoAvaliation.add(getResources().getString(R.string.market_base_avaliated));
+        fundoPartner = new ArrayList<>();
+        fundoPartner.add(getResources().getString(R.string.market_base_partners));
         mRVLManagerNew = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         mRVLManagerPromo = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         mRVLManagerAvaliation = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        mRVLManagerPartner = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         mRVLManagerFundoNew = new LinearLayoutManager(getActivity());
         mRVLManagerFundoPromo = new LinearLayoutManager(getActivity());
         mRVLManagerFundoAvaliation = new LinearLayoutManager(getActivity());
+        mRVLManagerFundoPartner = new LinearLayoutManager(getActivity());
     }
     private void setmRecyclerViewNew(){
         mRVAdapter = new ApplicationAdapter(app);
@@ -166,6 +175,25 @@ public class MarketFragment extends Fragment {
                 i.setAction(Intent.ACTION_SEARCH);
                 i.putExtra("Genre",genre.get(position));
                 startActivity(i);
+            }
+        });
+    }
+
+    private void setmRecyclerViewPartners(){
+        mAppAdapterPartners = new ApplicationAdapter(partners);
+        mBackAdapterPartner = new BackAppAdapter(fundoPartner,mAppAdapterPartners,mRVLManagerPartner);
+        //Define quadro que fica atrás dos apps
+        mRecyclerViewPartner.setLayoutManager(mRVLManagerFundoPartner);
+        mRecyclerViewPartner.setAdapter(mBackAdapterPartner);
+
+        mAppAdapterPartners.setOnitemClickListener(new ApplicationAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view,int position) {
+                Intent i = new Intent(getContext(),ApplicationActivity.class);
+                i.putExtra("App",partners.get(position));
+                ImageView mImgvApp = (ImageView)view.findViewById(R.id.imgvAppItemMarket);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), Pair.<View, String>create(mImgvApp,"AppTransition"));
+                startActivity(i,options.toBundle());
             }
         });
     }
@@ -245,6 +273,54 @@ public class MarketFragment extends Fragment {
                     setmRecyclerViewNew();
                     setmRecyclerViewPromo();
                     setmRecyclerViewAvaliation();
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq);
+    }
+    private void getPartnersApps() {
+        final ArrayList arrayList = new ArrayList();
+        // Tag used to cancel the request
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                AppConfig.URL_ConsultaPartnersApp, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray listaAplicativosResponse = new JSONArray(response);
+
+                    for (int i = 0; i < listaAplicativosResponse.length(); i++) {
+                        JSONObject jsonObjectApp = listaAplicativosResponse.getJSONObject(i);
+                        int idapp = Integer.parseInt(jsonObjectApp.getString("Id"));
+                        String title = jsonObjectApp.getString("Name");
+                        String desc = jsonObjectApp.getString("Desc");
+                        String version = jsonObjectApp.getString("Version");
+                        double price = Double.parseDouble(jsonObjectApp.getString("Price"));
+                        String publisher = jsonObjectApp.getString("PublisherName");
+                        String releasedate = jsonObjectApp.getString("ReleaseDate");
+                        String imageURL = jsonObjectApp.getString("ImageUrl");
+                        imageURL = "https://myndie.azurewebsites.net/"+imageURL;
+                        int devId = jsonObjectApp.getInt("DeveloperId");
+                        int typeAppId = jsonObjectApp.getInt("TypeAppId");
+                        int pegiId = jsonObjectApp.getInt("PegiId");
+                        Application objetoApp = new Application(idapp, title, price, version, desc, publisher, releasedate,imageURL,devId,typeAppId,pegiId);
+                        arrayList.add(objetoApp);
+                    }
+                    partners.addAll(arrayList);
+                    //openMarket();
+                    setmRecyclerViewPartners();
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
