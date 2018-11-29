@@ -11,8 +11,10 @@ import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -78,7 +80,8 @@ public class SearchableActivity extends AppCompatActivity {
     private void load() {
         helper = new DatabaseHelper(this);
         db = helper.getReadableDatabase();
-        mRVLManager = new LinearLayoutManager(this);
+        //mRVLManager = new GridLayoutManager(this,3);
+        mRVLManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
     }
 
     private void setmRecyclerView() {
