@@ -453,6 +453,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
                         Toasty.error(LoginActivity.this,errorMsg,Toast.LENGTH_SHORT,true).show();
+                        showProgress(false);
                     }
                 } catch (JSONException e) {
                     // JSON error
@@ -468,6 +469,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 Log.e(TAG, "Login Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         error.getMessage(), Toast.LENGTH_LONG).show();
+                showProgress(false);
             }
         }) {
 
