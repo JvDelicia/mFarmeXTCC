@@ -416,10 +416,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     //Toasty.custom(yourContext, "I'm a custom Toast", yourIconDrawable, tintColor, duration, withIcon,
     //shouldTint).show();
 
-    public void opanFtgPass(View view){
-        Toasty.info(this,"Em desenvolvimento", Toast.LENGTH_SHORT,true).show();
-        //Intent i = new Intent(this,CadastroCli.class);
-        //startActivity(i);
+    public void openFtgPass(View view){
+        //Toasty.info(this,"Em desenvolvimento", Toast.LENGTH_SHORT,true).show();
+        Intent i = new Intent(this, PasswordActivity.class);
+        startActivity(i);
     }
 
     private void checkLogin(final String email, final String password) {

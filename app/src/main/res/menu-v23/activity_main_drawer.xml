@@ -13,14 +13,15 @@
         <item
             android:id="@+id/nav_Avaliation"
             android:title="@string/activity_title_item_avaliations"
-            android:icon="@drawable/ic_star_black_24dp"/>
+            android:icon="@drawable/ic_wb_cloudy_black_24dp"/>
         <!--<item
             android:id="@+id/nav_Discussions"
             android:title="@string/activity_title_item_discussions"/>-->
         <item
             android:id="@+id/nav_Confing"
             android:title="@string/activity_title_item_configurations"
-            android:icon="@drawable/ic_settings_black_24dp"/>
+            android:icon="@drawable/ic_settings_black_24dp"
+            />
 
 
     </group>

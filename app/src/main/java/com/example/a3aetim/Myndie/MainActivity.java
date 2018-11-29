@@ -196,7 +196,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_Avaliation) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.frameContentMain, new CommentFragment());
+            Bundle bundle = new Bundle();
+            bundle.putString("username", loggedUser.getUsername());
+            bundle.putString("password", loggedUser.getPassUser());
+            ChatFragment cf = new ChatFragment();
+            cf.setArguments(bundle);
+            ft.replace(R.id.frameContentMain, cf);
             ft.commit();
         } /*else if (id == R.id.nav_Discussions) {
             FragmentManager fm = getSupportFragmentManager();
