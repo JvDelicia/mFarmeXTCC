@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.example.a3aetim.Myndie.Connection.AppConfig;
 
@@ -27,6 +28,7 @@ public class PasswordActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                Toast.makeText(PasswordActivity.this, "Um e-mail de recuperação da senha foi enviado para você!!", Toast.LENGTH_SHORT).show();
                 finalizar();
                 return false;
             }
