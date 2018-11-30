@@ -94,7 +94,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:onClick="opanCadCli"
-                    android:text="Cadastre-se"
+                    android:text="@string/login_cad"
                     android:textAlignment="center"
                     android:textSize="10sp" />
 
@@ -106,7 +106,7 @@
                     android:layout_weight="1"
                     android:layout_marginTop="20dp"
                     android:onClick="openFtgPass"
-                    android:text="Esqueci a senha"
+                    android:text="@string/login_forgot_password"
                     android:textAlignment="center"
                     android:textSize="10sp" />
             </LinearLayout>

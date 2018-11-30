@@ -40,7 +40,7 @@
     <string name="error_invalid_name">Invalid typed name</string>
     <string name="error_invalid_email">Invalid typed e-mail address</string>
     <string name="error_invalid_date">Invalid date</string>
-    <string name="error_invalid_password">A senha informada é muito curta Password is too short</string>
+    <string name="error_invalid_password">Password is too short</string>
     <string name="error_invalid_user">The username is already being used. Choose another username</string>
 
     <string name="error_incorrect_password">Incorrect password</string>
@@ -79,4 +79,8 @@
     <string name="market_base_partners">Partners</string>
 
     <string name="app_Desc">Description</string>
+    <!--Login Activity-->
+    <string name="login_cad">Sign Up</string>
+    <string name="login_forgot_password">Forgot my password</string>
+    <string name="logout">Logout</string>
 </resources>

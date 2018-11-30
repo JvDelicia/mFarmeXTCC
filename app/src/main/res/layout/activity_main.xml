@@ -37,7 +37,7 @@
             android:gravity="center"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="100dp"
-            android:text="Logout"
+            android:text="@string/logout"
             android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
             />
     </LinearLayout>

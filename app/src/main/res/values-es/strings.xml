@@ -78,4 +78,8 @@
     <string name="market_base_partners">Parceiros</string>
 
     <string name="app_Desc">Descricion</string>
+    <!--Login Activity-->
+    <string name="login_cad">Cadastre-se</string>
+    <string name="login_forgot_password">Esqueci a senha</string>
+    <string name="logout">Logout</string>
 </resources>
