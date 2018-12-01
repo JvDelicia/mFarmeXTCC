@@ -57,14 +57,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import info.hoang8f.widget.FButton;
+
 
 import static com.example.a3aetim.Myndie.Connection.AppController.TAG;
 
 public class ApplicationActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
-    TextView mTitle,mVersion, mPublisherName, mReleaseDate;
+    TextView mTitle,mVersion, mPrice, mPublisherName, mReleaseDate;
     Application app;
-    FButton mPrice;
     FancyAccordionView mDesc;
     private Toolbar toolbar;
     private SliderLayout mSlider;
@@ -74,7 +73,7 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application);
-        mPrice =(FButton) findViewById(R.id.btnPrice);
+        mPrice =(TextView) findViewById(R.id.txtPriceApp);
         mTitle =(TextView)findViewById(R.id.txtTitleApp);
         mVersion =(TextView)findViewById(R.id.txtVersionApp);
         mDesc =(FancyAccordionView) findViewById(R.id.txtDescApp);

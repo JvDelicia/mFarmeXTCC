@@ -105,16 +105,6 @@
 
                 </LinearLayout>
 
-            <info.hoang8f.widget.FButton
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:id="@+id/btnPrice"
-                fbutton:buttonColor="@color/colorAccent"
-                fbutton:shadowColor="@color/colorSecondary"
-                fbutton:shadowEnabled="true"
-                fbutton:shadowHeight="5dp"
-                fbutton:cornerRadius="5dp"
-            />
             <TextView
                 android:id="@+id/txtPriceApp"
                 android:layout_width="wrap_content"
