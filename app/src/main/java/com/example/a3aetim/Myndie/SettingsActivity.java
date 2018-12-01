@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.a3aetim.Myndie.Fragments.SettingsFragment;
 
@@ -21,12 +22,14 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String KEY_VIBRATION = "vibration_chk";
     public static final String KEY_LANGUAGE = "selec_lang";
     String idiomPref="";
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocale();
         setContentView(R.layout.activity_settings);
+        getSupportActionBar().setTitle(getString(R.string.title_activity_settings));
         if(savedInstanceState == null) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
@@ -39,7 +42,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        carregarValores();
     }
 
     @Override
@@ -54,6 +56,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void carregarValores(){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                if(key.equals("selec_lang")){
+                    carregarValores();
+                    loadLocale();
+                    restartThis();
+                }
+            }
+        };
+
+        sharedPref.registerOnSharedPreferenceChangeListener(listener);
         idiomPref = sharedPref.getString(KEY_LANGUAGE, "-1");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         Boolean switchPref = sp.getBoolean(SettingsActivity.KEY_NOT, false);
@@ -72,7 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
         Configuration configuration = new Configuration();
         configuration.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
-        /*        */
+
     }
 
     public void loadLocale(){
@@ -80,4 +93,28 @@ public class SettingsActivity extends AppCompatActivity {
         String language = sp.getString("lang","");
         setLocale(language);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(listener);
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(listener);
+
+    }
+
+    private void restartThis() {
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
+    }
+
+
 }

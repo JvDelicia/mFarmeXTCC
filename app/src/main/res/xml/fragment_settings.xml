@@ -33,7 +33,7 @@
        android:positiveButtonText="@null"
        android:key="selec_lang"
        android:summary="%s"
-       android:dialogTheme="@style/CustomDialogPreference"
+       android:dialogTheme="@style/DialogStyle"
        android:title="@string/pref_title_language" />
     <!--android:summary="@string/pref_choose_language"-->
 

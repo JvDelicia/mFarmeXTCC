@@ -2,9 +2,13 @@
 <resources>
     <string name="app_name">Myndie</string>
     <string name="title_activity_main">Myndie</string>
+    <string name="title_activity_cadastro_cli">Sing-up</string>
+    <string name="title_activity_settings">Configurations</string>
+
+    <string name="title_filter">Filter</string>
 
     <string name="activity_title_item_search">Search</string>
-    <string name="activity_title_item_listApps">Aplications</string>
+    <string name="activity_title_item_listApps">Applications</string>
     <string name="activity_title_item_listDevs">Developers</string>
     <string name="activity_title_item_store">Market</string>
     <string name="activity_title_item_avaliations">Online Chat</string>
@@ -46,9 +50,7 @@
     <string name="error_incorrect_password">Incorrect password</string>
     <string name="error_field_required">This field is required</string>
 
-    <string name="title_activity_cadastro_cli">Sing-up</string>
-    <string name="title_activity_settings">Configurations</string>
-    <string name="title_filter">Filter</string>
+
 
     <!-- Strings related to Settings -->
     <string-array name="list_languages_preferences">
@@ -56,6 +58,8 @@
         <item>Español</item>
         <item>Português</item>
     </string-array>
+
+
     <string-array name="list_languages_values">
         <item>en</item>
         <item>es</item>

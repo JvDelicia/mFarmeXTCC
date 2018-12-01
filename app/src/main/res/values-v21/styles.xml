@@ -5,11 +5,24 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:dialogTheme">@style/DialogStyle</item>
-        <item name="android:alertDialogTheme">@style/DialogStyle</item>
+        <item name="dialogTheme">@style/DialogStyle</item>
+        <item name="alertDialogTheme">@style/DialogStyle</item>
+        <item name="textColorAlertDialogListItem">@color/colorText</item>
     </style>
 
-    <style name="DialogStyle" parent="android:Theme.Material.Dialog">
+    <style name="DialogStyle" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">@color/colorTitle</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/colorText</item>
+        <item name="android:textColor">@color/colorText</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/colorBackground</item>
+        <!-- Used for the buttons -->
+        <item name="android:headerDividersEnabled">true</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorGray</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorSecondary</item>
     </style>
 </resources>
