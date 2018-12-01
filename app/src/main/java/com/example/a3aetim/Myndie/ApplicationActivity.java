@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,9 +46,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.example.a3aetim.Myndie.Connection.AppController.TAG;
@@ -71,6 +79,13 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
         mReleaseDate = (TextView)findViewById(R.id.txtReleaseDateApp);
         mSlider = (SliderLayout)findViewById(R.id.sliderApplication);
         app  =(Application) getIntent().getSerializableExtra("App");
+        ImageButton back1 = (ImageButton) findViewById(R.id.backToMain);
+        back1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         ItemAdapter.OnItemClickedListener mListener = new ItemAdapter.OnItemClickedListener() {
             @Override
@@ -122,12 +137,12 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
 
     }
 
-    public void preencherCampos(){
+    public void preencherCampos() {
         mTitle.setText(app.getTitle());
-        mVersion.setText(app.getVersion());
-        mPublisherName.setText(app.getPublisherName());
-        mReleaseDate.setText(String.valueOf(app.getReleaseDate()));
-        mPrice.setText("US$ "+String.valueOf(app.getPrice()));
+        mVersion.setText(getString(R.string.app_activity_version)+" "+app.getVersion());
+        mPublisherName.setText(getString(R.string.app_activity_publisher)+" "+app.getPublisherName());
+        mReleaseDate.setText(getString(R.string.app_activity_releasedate)+" "+ app.getReleaseDate() );
+        mPrice.setText(getString(R.string.app_activity_price)+" "+"US$ "+String.valueOf(app.getPrice()));
         preencherDesc();
     }
 

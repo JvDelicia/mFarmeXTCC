@@ -83,4 +83,11 @@
     <string name="login_cad">Cadastre-se</string>
     <string name="login_forgot_password">Esqueci a senha</string>
     <string name="logout">Logout</string>
+
+    <!--Application Activity-->
+    <string name="app_activity_price">Preço: </string>
+    <string name="app_activity_version">Versão: </string>
+    <string name="app_activity_publisher">Nome da publicadora: </string>
+    <string name="app_activity_releasedate">Data de lançamento: </string>
+
 </resources>
