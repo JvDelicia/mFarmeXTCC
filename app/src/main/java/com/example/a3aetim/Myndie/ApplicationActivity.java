@@ -57,11 +57,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import info.hoang8f.widget.FButton;
+
 import static com.example.a3aetim.Myndie.Connection.AppController.TAG;
 
 public class ApplicationActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
-    TextView mTitle,mPrice,mVersion, mPublisherName, mReleaseDate;
+    TextView mTitle,mVersion, mPublisherName, mReleaseDate;
     Application app;
+    FButton mPrice;
     FancyAccordionView mDesc;
     private Toolbar toolbar;
     private SliderLayout mSlider;
@@ -71,7 +74,7 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application);
-        mPrice =(TextView)findViewById(R.id.txtPriceApp);
+        mPrice =(FButton) findViewById(R.id.btnPrice);
         mTitle =(TextView)findViewById(R.id.txtTitleApp);
         mVersion =(TextView)findViewById(R.id.txtVersionApp);
         mDesc =(FancyAccordionView) findViewById(R.id.txtDescApp);
@@ -115,12 +118,14 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
         }
         preencherCampos();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.applicationmenu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -157,6 +162,7 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
         itemHolders.add(itemHolder);
         mDesc.setAdapterItems(itemHolders);
     }
+
     private void getImages() {
         final ArrayList arrayList = new ArrayList();
         // Tag used to cancel the request
@@ -204,6 +210,7 @@ public class ApplicationActivity extends AppCompatActivity implements BaseSlider
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq);
     }
+
     public void preencherSlider(final ArrayList arrayList){
         ArrayList<Bitmap> fotos = new ArrayList<>();
         /*for(int i = 0 ; i < arrayList.size(); i++){

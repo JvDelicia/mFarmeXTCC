@@ -85,7 +85,7 @@
     <string name="logout">Logout</string>
 
     <!--Application Activity-->
-    <string name="app_activity_price">Price: </string>
+    <string name="app_activity_price">Buy for: </string>
     <string name="app_activity_version">Version: </string>
     <string name="app_activity_publisher">Publisher Name: </string>
     <string name="app_activity_releasedate">Release Date: </string>

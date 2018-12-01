@@ -90,7 +90,7 @@
 
 
     <!--Application Activity-->
-    <string name="app_activity_price">Preço: </string>
+    <string name="app_activity_price">Compre por: </string>
     <string name="app_activity_version">Versão: </string>
     <string name="app_activity_publisher">Nome da publicadora: </string>
     <string name="app_activity_releasedate">Data de lançamento: </string>
