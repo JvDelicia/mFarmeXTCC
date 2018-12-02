@@ -427,7 +427,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         String tag_string_req = "req_login";
 
         showProgress(true);
-        Toasty.custom(LoginActivity.this,"Logging in....",R.drawable.ic_warning_outline_white, Color.BLACK,Toast.LENGTH_SHORT,true,true).show();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_LOGIN, new Response.Listener<String>() {

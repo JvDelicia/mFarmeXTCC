@@ -19,7 +19,7 @@ public class AppConfig {
 
     public static String URL_ConsultaAppGeneros = "https://myndie.azurewebsites.net/php/ConsultaAppGenero.php ";
 
-    public static String URL_RecuperarSenha = "https://myndie.azurewebsites.net/User/ForgotYourPassword";
+    public static String URL_RecuperarSenha = "https://myndie.azurewebsites.net/User/ForgotYourPasswordMobile";
 
     public static String URL_ChatOnline = "https://myndie.azurewebsites.net/User/MobileChatLogin";
 

@@ -87,6 +87,8 @@
     <string name="login_cad">Sign Up</string>
     <string name="login_forgot_password">Forgot my password</string>
     <string name="logout">Logout</string>
+    <string name="change_password">An email was sent to you</string>
+    <string name="register_cli">Successfully registered</string>
 
 
     <!--Application Activity-->

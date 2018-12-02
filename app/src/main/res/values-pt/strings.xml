@@ -83,6 +83,8 @@
     <string name="login_cad">Cadastre-se</string>
     <string name="login_forgot_password">Esqueci a senha</string>
     <string name="logout">Logout</string>
+    <string name="change_password">Um e-mail de recuperação da senha foi enviado para você</string>
+    <string name="register_cli">Cadastro realizado com sucesso</string>
 
     <!--Application Activity-->
     <string name="app_activity_price">Compre por: </string>

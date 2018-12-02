@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -64,10 +65,11 @@ public class CadastroCli extends Activity{ //implements AdapterView.OnItemSelect
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_cli);
 
-        WebView wv = (WebView)findViewById(R.id.webv);
+        final WebView wv = (WebView)findViewById(R.id.webv);
         WebSettings ws = wv.getSettings();
         ws.setSupportZoom(false);
         ws.setJavaScriptEnabled(true);
+        wv.setBackgroundColor(getResources().getColor(R.color.colorBackground));
 
         wv.addJavascriptInterface(this, "Voltar");
 
@@ -77,9 +79,22 @@ public class CadastroCli extends Activity{ //implements AdapterView.OnItemSelect
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
-                Toast.makeText(CadastroCli.this, "Cadastro realizado com sucesso!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CadastroCli.this, getString(R.string.register_cli), Toast.LENGTH_SHORT).show();
                 finalizar();
                 return false;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                ProgressBar pb = (ProgressBar)findViewById(R.id.pgbarcli);
+                pb.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                ProgressBar pb = (ProgressBar)findViewById(R.id.pgbarcli);
+                pb.setVisibility(View.INVISIBLE);
+                wv.setVisibility(View.VISIBLE);
             }
         });
 
