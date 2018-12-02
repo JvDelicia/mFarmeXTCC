@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.a3aetim.Myndie.Classes.ImageDAO;
 import com.example.a3aetim.Myndie.Classes.User;
+import com.example.a3aetim.Myndie.Images.DownloadImage;
 
 import es.dmoral.toasty.Toasty;
 
@@ -43,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         collapsingToolbar.setExpandedTitleColor(Color.WHITE);
         collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
         ImageView headerProfile = (ImageView)findViewById(R.id.header);
-        headerProfile.setImageBitmap(ImageDAO.loadImageFromStorage(loggedUser.getPicUser()));
+        new DownloadImage(headerProfile).execute(loggedUser.getPicUser());
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {

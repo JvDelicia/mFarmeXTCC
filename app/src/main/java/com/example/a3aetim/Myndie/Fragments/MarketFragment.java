@@ -3,12 +3,14 @@ package com.example.a3aetim.Myndie.Fragments;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import com.example.a3aetim.Myndie.Adapters.GenreAdapter;
 import com.example.a3aetim.Myndie.ApplicationActivity;
 import com.example.a3aetim.Myndie.Classes.Application;
 import com.example.a3aetim.Myndie.Classes.Genre;
+import com.example.a3aetim.Myndie.Classes.SavedInstanceListas;
 import com.example.a3aetim.Myndie.Connection.AppConfig;
 import com.example.a3aetim.Myndie.Connection.AppController;
 import com.example.a3aetim.Myndie.R;
@@ -56,6 +59,7 @@ public class MarketFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        load();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_market, container, false);
         view.findViewById(R.id.recyclerViewMarket);
@@ -73,15 +77,39 @@ public class MarketFragment extends Fragment {
         ///
         mRecyclerViewPartner = view.findViewById(R.id.recyclerViewMarketPartner);
         mRecyclerViewPartner.setHasFixedSize(true);
-        load();
-        getAllApps();
-        getPartnersApps();
-        getAllGenres();
+
+        if(savedInstanceState != null){
+            SavedInstanceListas savedListas = (SavedInstanceListas) savedInstanceState.getSerializable(SavedInstanceListas.KEY);
+            app = savedListas.apps;
+            genre = savedListas.genres;
+            partners = savedListas.partners;
+        }
+        if(savedInstanceState == null || app.size() == 0 || genre.size() == 0 || partners.size() == 0){
+            Log.i("AAAAAAAAAA","baixou");
+            getAllApps();
+            getPartnersApps();
+            getAllGenres();
+        }
+        else{
+            Log.i("AAAAAAAAAA","puxou");
+            setmRecyclerViewNew();
+            setmRecyclerViewPromo();
+            setmRecyclerViewAvaliation();
+            setmRecyclerViewPartners();
+            setGenreMarket();
+        }
+
         return view;
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(SavedInstanceListas.KEY, new SavedInstanceListas(app,genre,partners));
     }
 
     private void load(){
