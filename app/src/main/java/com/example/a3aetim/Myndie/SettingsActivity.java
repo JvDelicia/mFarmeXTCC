@@ -85,7 +85,6 @@ public class SettingsActivity extends AppCompatActivity {
         Configuration configuration = new Configuration();
         configuration.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
-
     }
 
     public void loadLocale(){

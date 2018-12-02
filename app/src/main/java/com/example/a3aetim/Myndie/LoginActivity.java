@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -50,12 +52,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.example.a3aetim.Myndie.Connection.AppController.TAG;
+import static com.example.a3aetim.Myndie.Splash.PREF_NAME;
 
 /**
  * A login screen that offers login via email/password.
@@ -87,6 +91,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private String chkEmail,chkPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        loadLocale();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -125,6 +130,20 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         startActivity(i);
         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         finish();
+    }
+
+    public void setLocale(String lang){
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    public void loadLocale(){
+        SharedPreferences sp = getSharedPreferences(PREF_NAME,0);
+        String language = sp.getString("lang","");
+        setLocale(language);
     }
 
     private void populateAutoComplete() {
