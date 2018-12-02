@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.a3aetim.Myndie.Adapters.ApplicationAdapter;
 import com.example.a3aetim.Myndie.Adapters.BackAppAdapter;
+import com.example.a3aetim.Myndie.Adapters.WishlistAdapter;
 import com.example.a3aetim.Myndie.ApplicationActivity;
 import com.example.a3aetim.Myndie.Classes.Application;
 import com.example.a3aetim.Myndie.Connection.AppConfig;
@@ -39,10 +40,8 @@ import java.util.Map;
 public class WishlistFragment extends Fragment {
     public ArrayList<Application> app = new ArrayList<>();
     private RecyclerView recyclerViewWishlist;
-    private RecyclerView.LayoutManager mRVLayoutManagerWishlist, mRVLManagerFundoWishlist;
-    private ApplicationAdapter mAppAdapter;
-    private BackAppAdapter mBackAppAdapter;
-    private ArrayList<String> fundoWishlist;
+    private RecyclerView.LayoutManager mRVLayoutManagerWishlist;
+    private WishlistAdapter mAppAdapter;
     final public int iduser = 2;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,26 +50,21 @@ public class WishlistFragment extends Fragment {
     }
 
     public void load(){
-        fundoWishlist = new ArrayList<>();
-        fundoWishlist.add(getResources().getString(R.string.activity_title_item_wishlist));
-        mRVLayoutManagerWishlist = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        mRVLManagerFundoWishlist = new LinearLayoutManager(getActivity());
+        mRVLayoutManagerWishlist = new LinearLayoutManager(getActivity());
     }
 
     public void setRecyclerViewWishlist(){
-        mAppAdapter = new ApplicationAdapter(app);
-        mBackAppAdapter = new BackAppAdapter(fundoWishlist, mAppAdapter, mRVLayoutManagerWishlist);
-        recyclerViewWishlist.setLayoutManager(mRVLManagerFundoWishlist);
+        mAppAdapter = new WishlistAdapter(app);
+        recyclerViewWishlist.setLayoutManager(mRVLayoutManagerWishlist);
         recyclerViewWishlist.setAdapter(mAppAdapter);
 
-        mAppAdapter.setOnitemClickListener(new ApplicationAdapter.OnItemClickListener() {
+        mAppAdapter.setOnitemClickListener(new WishlistAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view,int position) {
                 Intent i = new Intent(getContext(),ApplicationActivity.class);
                 i.putExtra("App",app.get(position));
                 ImageView mImgvApp = (ImageView)view.findViewById(R.id.imgvAppItemMarket);
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), Pair.<View, String>create(mImgvApp,"AppTransition"));
-                startActivity(i,options.toBundle());
+                startActivity(i);
             }
         });
     }
@@ -78,12 +72,11 @@ public class WishlistFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //load();
         View v = inflater.inflate(R.layout.fragment_wishlist, container, false);
-        /*recyclerViewWishlist = (RecyclerView)v.findViewById(R.id.recyclerViewWishlist);
+        load();
+        recyclerViewWishlist = (RecyclerView)v.findViewById(R.id.recyclerViewWishlist);
         recyclerViewWishlist.setHasFixedSize(true);
         getListApps();
-        setRecyclerViewWishlist();*/
         return v;
     }
 
@@ -120,7 +113,7 @@ public class WishlistFragment extends Fragment {
                         arrayList.add(objetoApp);
                     }
                     app.addAll(arrayList);
-
+                    setRecyclerViewWishlist();
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
