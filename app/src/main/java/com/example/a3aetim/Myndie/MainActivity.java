@@ -204,13 +204,13 @@ public class MainActivity extends AppCompatActivity
             cf.setArguments(bundle);
             ft.replace(R.id.frameContentMain, cf);
             ft.commit();
-        } /*else if (id == R.id.nav_Discussions) {
+        } else if (id == R.id.nav_Wishlist) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.frameContentMain, new DiscussionFragment());
+            ft.replace(R.id.frameContentMain, new WishlistFragment());
             ft.commit();
 
-        } */else if (id == R.id.nav_Confing) {
+        } else if (id == R.id.nav_Confing) {
             Intent i = new Intent(this,SettingsActivity.class);
             startActivity(i);
            /* FragmentManager fm = getSupportFragmentManager();

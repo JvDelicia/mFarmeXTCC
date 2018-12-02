@@ -12,7 +12,7 @@
     <string name="activity_title_item_listDevs">Developers</string>
     <string name="activity_title_item_store">Market</string>
     <string name="activity_title_item_avaliations">Online Chat</string>
-    <string name="activity_title_item_discussions">Discussions</string>
+    <string name="activity_title_item_wishlist">Lista de desejos</string>
     <string name="activity_title_item_configurations">Settings</string>
     <string name="activity_title_item_rateus">Rate-us</string>
 
@@ -49,7 +49,6 @@
 
     <string name="error_incorrect_password">Incorrect password</string>
     <string name="error_field_required">This field is required</string>
-
 
 
     <!-- Strings related to Settings -->

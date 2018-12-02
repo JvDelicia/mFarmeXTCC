@@ -10,6 +10,8 @@ public class AppConfig {
     // Server user register url
     public static String URL_ListaApps = "https://myndie.azurewebsites.net/php/ListaAplicacao.php";
 
+    public static String URL_Wishlist = "https://myndie.azurewebsites.net/php/Wishlist.php";
+
     // Lista todos os genêros
     public static String URL_ListaGeneros = "https://myndie.azurewebsites.net/php/ListaGenero.php";
 

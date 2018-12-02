@@ -135,6 +135,7 @@ public class MarketFragment extends Fragment {
         mRVLManagerFundoAvaliation = new LinearLayoutManager(getActivity());
         mRVLManagerFundoPartner = new LinearLayoutManager(getActivity());
     }
+
     private void setmRecyclerViewNew(){
         mRVAdapter = new ApplicationAdapter(app);
         mBackAdapterNew = new BackAppAdapter(fundoNew,mRVAdapter,mRVLManagerNew);

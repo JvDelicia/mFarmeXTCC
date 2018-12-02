@@ -67,7 +67,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_back_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_card_giftcard_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -77,9 +77,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_round_arrow_back_24px" />
+                            <entry key="outputName" value="ic_card_giftcard_black_24dp" />
                             <entry key="sourceFile" value="C:\Users\Marcos S. Martins\Desktop\TCC\round-arrow_back-24px (3).svg" />
                           </map>
                         </option>

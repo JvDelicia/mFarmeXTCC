@@ -27,6 +27,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
     public interface OnItemClickListener{
         void onItemClick(View view, int position);
     }
+
     public void setOnitemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
@@ -53,10 +54,12 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
             });
         }
     }
+
     public ApplicationAdapter(ArrayList<Application> appList){
         mAppList = appList;
         mFullAppList = new ArrayList<>(appList);
     }
+
     @Override
     public ApplicationViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.app_item,viewGroup,false);
@@ -86,6 +89,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
     public Filter getFilter() {
         return applicationFilter;
     }
+
     private Filter applicationFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -112,5 +116,6 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
             notifyDataSetChanged();
         }
     };
+
 }
 //https://medium.com/@crossphd/android-image-loading-from-a-string-url-6c8290b82c5e

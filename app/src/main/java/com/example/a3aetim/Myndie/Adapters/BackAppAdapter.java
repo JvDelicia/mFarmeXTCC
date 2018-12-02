@@ -73,6 +73,7 @@ public class BackAppAdapter extends RecyclerView.Adapter<BackAppAdapter.Applicat
     public int getItemCount() {
         return mBack.size();
     }
+
     public void setAppFilter(CharSequence filter){
         mAppAdapter.getFilter().filter(filter);
     }

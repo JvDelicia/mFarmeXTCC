@@ -14,9 +14,10 @@
             android:id="@+id/nav_Avaliation"
             android:title="@string/activity_title_item_avaliations"
             android:icon="@drawable/ic_wb_cloudy_black_24dp"/>
-        <!--<item
-            android:id="@+id/nav_Discussions"
-            android:title="@string/activity_title_item_discussions"/>-->
+        <item
+            android:id="@+id/nav_Wishlist"
+            android:title="@string/activity_title_item_wishlist"
+            android:icon="@drawable/ic_card_giftcard_black_24dp"/>
         <item
             android:id="@+id/nav_Confing"
             android:title="@string/activity_title_item_configurations"
