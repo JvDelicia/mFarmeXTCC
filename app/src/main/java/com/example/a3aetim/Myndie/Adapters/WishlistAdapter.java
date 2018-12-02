@@ -71,8 +71,8 @@ public class WishlistAdapter  extends RecyclerView.Adapter<WishlistAdapter.Wishl
 
         Application currentApp = mAppList.get(i);
         new DownloadImage(applicationViewHolder.mImageView).execute(currentApp.getImageUrl());
-        if(currentApp.getTitle().length()>12){
-            applicationViewHolder.mTitle.setText(currentApp.getTitle().substring(0,12)+"...");
+        if(currentApp.getTitle().length()>40){
+            applicationViewHolder.mTitle.setText(currentApp.getTitle().substring(0,40)+"...");
         }else{
             applicationViewHolder.mTitle.setText(currentApp.getTitle());
         }

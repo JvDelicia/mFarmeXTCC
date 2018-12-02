@@ -92,4 +92,7 @@
     <string name="app_activity_publisher">Nome da publicadora: </string>
     <string name="app_activity_releasedate">Data de lançamento: </string>
 
+    <!--Wishlist-->
+    <string name="wish_nocontent">Não há itens na sua lista de desejos</string>
+
 </resources>

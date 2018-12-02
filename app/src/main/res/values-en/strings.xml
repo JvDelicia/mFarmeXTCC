@@ -91,4 +91,7 @@
     <string name="app_activity_version">Version: </string>
     <string name="app_activity_publisher">Publisher Name: </string>
     <string name="app_activity_releasedate">Release Date: </string>
+
+    <!--Wishlist-->
+    <string name="wish_nocontent">There are no itens in you wishlist</string>
 </resources>

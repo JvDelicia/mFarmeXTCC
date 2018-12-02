@@ -207,7 +207,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_Wishlist) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.frameContentMain, new WishlistFragment());
+            Bundle bundle = new Bundle();
+            bundle.putInt("userid", loggedUser.get_IdUser());
+            WishlistFragment wf = new WishlistFragment();
+            wf.setArguments(bundle);
+            ft.replace(R.id.frameContentMain, wf);
             ft.commit();
 
         } else if (id == R.id.nav_Confing) {

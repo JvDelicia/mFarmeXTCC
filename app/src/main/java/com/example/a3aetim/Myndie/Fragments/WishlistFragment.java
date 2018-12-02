@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,25 +33,29 @@ import com.example.a3aetim.Myndie.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WishlistFragment extends Fragment {
-    public ArrayList<Application> app = new ArrayList<>();
+    final public ArrayList<Application> app = new ArrayList<>();
     private RecyclerView recyclerViewWishlist;
     private RecyclerView.LayoutManager mRVLayoutManagerWishlist;
     private WishlistAdapter mAppAdapter;
-    final public int iduser = 2;
+    static public int iduser;
+    TextView tv;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        int userid = getArguments().getInt("userid");
+        iduser = userid;
     }
 
     public void load(){
         mRVLayoutManagerWishlist = new LinearLayoutManager(getActivity());
+
     }
 
     public void setRecyclerViewWishlist(){
@@ -74,10 +79,23 @@ public class WishlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_wishlist, container, false);
         load();
+        tv = (TextView)v.findViewById(R.id.txtWish);
         recyclerViewWishlist = (RecyclerView)v.findViewById(R.id.recyclerViewWishlist);
         recyclerViewWishlist.setHasFixedSize(true);
         getListApps();
+
+
+
         return v;
+    }
+
+    public void verificar(){
+        if(app.size() != 0){
+            tv.setVisibility(View.INVISIBLE);
+        }
+        else{
+            tv.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -114,6 +132,7 @@ public class WishlistFragment extends Fragment {
                     }
                     app.addAll(arrayList);
                     setRecyclerViewWishlist();
+                    verificar();
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
@@ -135,6 +154,8 @@ public class WishlistFragment extends Fragment {
                 return params;
             }*/
         };
+
+
 
 
         // Adding request to request queue
