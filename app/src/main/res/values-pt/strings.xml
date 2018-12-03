@@ -27,7 +27,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
     <string name="title_activity_login">Login</string>
 
     <!-- Strings related to login -->
@@ -72,10 +72,10 @@
     <string name="pref_choose_language">Escolha um idioma</string>
 
     <string name="toast_work_in_progress">Estamos trabalhando para adicionar essa língua</string>
-    <string name="prof_details">Details:</string>
+    <string name="prof_details">Detalhes:</string>
     <string name="market_base_new">Novo</string>
     <string name="market_base_featured">Destaques</string>
-    <string name="market_base_avaliated">Melhores Avaliados</string>
+    <string name="market_base_avaliated">Mais avaliados</string>
     <string name="market_base_partners">Parceiros</string>
 
     <string name="app_Desc">Descrição</string>
