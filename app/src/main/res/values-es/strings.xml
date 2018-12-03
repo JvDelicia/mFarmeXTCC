@@ -73,7 +73,7 @@
     <string name="toast_work_in_progress">Estamos trabalhando para adicionar essa língua</string>
     <string name="prof_details">Details:</string>
     <string name="market_base_new">Novo</string>
-    <string name="market_base_promo">Em Promoção</string>
+    <string name="market_base_featured">Destaques</string>
     <string name="market_base_avaliated">Melhores Avaliados</string>
     <string name="market_base_partners">Parceiros</string>
 

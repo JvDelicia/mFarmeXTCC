@@ -7,8 +7,14 @@ public class AppConfig {
     //Lista usuarios
     public static String URL_ListaUsuarios = "https://myndie.azurewebsites.net/php/ListaUsuario.php";
 
-    // Server user register url
-    public static String URL_ListaApps = "https://myndie.azurewebsites.net/php/ListaAplicacao.php";
+    //Market
+    //public static String URL_ListaApps = "https://myndie.azurewebsites.net/php/ListaAplicacao.php";
+    public static String URL_ListaNewApps = "https://myndie.azurewebsites.net/php/ListaNew.php";
+
+    public static String URL_ListaFeaturedApps = "https://myndie.azurewebsites.net/php/ListaFeatured.php";
+
+    public static String URL_ListaAvaliatedApps = "https://myndie.azurewebsites.net/php/ListaMaisAvaliados.php";
+    //////
 
     public static String URL_Wishlist = "https://myndie.azurewebsites.net/php/Wishlist.php";
 
@@ -30,4 +36,5 @@ public class AppConfig {
     public static String URL_ConsultaImagensApp ="https://myndie.azurewebsites.net/php/ConsultaImagens.php";
 
     public static String URL_ConsultaPartnersApp ="https://myndie.azurewebsites.net/php/GetPartners.php";
+
 }
