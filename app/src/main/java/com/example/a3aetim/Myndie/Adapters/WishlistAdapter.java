@@ -68,7 +68,6 @@ public class WishlistAdapter  extends RecyclerView.Adapter<WishlistAdapter.Wishl
 
     @Override
     public void onBindViewHolder(@NonNull WishlistAdapter.WishlistViewHolder applicationViewHolder, int i) {
-
         Application currentApp = mAppList.get(i);
         new DownloadImage(applicationViewHolder.mImageView).execute(currentApp.getImageUrl());
         if(currentApp.getTitle().length()>40){

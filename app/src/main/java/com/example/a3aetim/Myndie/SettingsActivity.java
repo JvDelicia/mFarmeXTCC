@@ -29,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         loadLocale();
         setContentView(R.layout.activity_settings);
-        getSupportActionBar().setTitle(getString(R.string.title_activity_settings));
+        getSupportActionBar().setTitle(getString(R.string.action_settings));
         if(savedInstanceState == null) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
